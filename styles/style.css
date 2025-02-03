@@ -69,6 +69,11 @@ form > p {
     font-size: 2rem;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
 input {
     font-size: 2rem;
     width: 50%;
