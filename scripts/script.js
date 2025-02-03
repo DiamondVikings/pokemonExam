@@ -162,3 +162,15 @@ function imgSrc() {
 
     return imgArray
 }
+
+//Kallas på vid hoverIn & hover Out function 
+function checkGameOver(pokemonArray) {
+    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+        console.log('spelet är slut');
+        playPauseMusic();
+        
+    } else {
+        console.log('alla är inte isCaught, fortsätt spela');
+    }
+}
+
