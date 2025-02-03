@@ -5,15 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
         // Validera formuläret
         const isValid = validateForm();
         if (isValid) {
-            // Om formuläret är giltigt, skapa player
-            const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-            console.log(player.getPlayerInfo()); 
-
-            // startGame();
+            startGame();
         }
     });
 
@@ -123,6 +118,26 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
 }
 
 // --- END PLAYER LOGIC ---
+
+
+// --- START GAME ---
+
+function startGame() {
+    console.log('Spelet startar..');
+
+    document.querySelector('#formWrapper').style.display = 'none';
+    document.querySelector('#gameField').classList.remove('.d-none');
+
+    const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
+    console.log(player.getPlayerInfo()); 
+
+    changeBackgroundImage();
+    createStartingPokemon();
+    // timer();
+}
+
+
+// --- END START GAME ---
 
 
 // --- GAME LOGIC ----
