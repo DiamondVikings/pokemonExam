@@ -179,6 +179,40 @@ function imgSrc() {
 }
 
  
+//Genererar ett htmlelement för varje pokeObject
+function createHTMLforPokeObj() {
+    // Test objekt med pokemon. Detta ska vara startingPoke eg.
+        let pokemonObject = [  
+            {
+                namn: "hej",
+                img: "imgUrl",
+                score: 10
+            },
+            {
+                namn: "hej",
+                img: "imgUrl",
+                score: 10
+            },
+            {
+                namn: "hej",
+                img: "imgUrl",
+                score: 10
+            }
+            ];
+
+        let gameField = document.querySelector('#gameField')
+        
+        //Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
+        pokemonObject.forEach(function(poke) {
+            let gamePokEl = document.createElement('img')
+            gamePokEl.src = poke.img
+            gameField.appendChild(gamePokEl)
+        }) 
+}
+
+
+
+
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function isCaught(pokemonObject) {
