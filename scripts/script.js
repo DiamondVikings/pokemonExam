@@ -1,5 +1,3 @@
-// I denna fil skriver ni all er kod
-
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
   
@@ -9,16 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(form);
         //validateForm(formData.get('username'), formData.get('age'), formData.get('gender'))
     });
-    
-      const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-      function playPauseMusic () {
-          if (audio.paused) {
-              audio.play();
-          } else {
-              audio.pause();
-          }
-      }   
+
+    //Musikspelaren
+    const audio = new Audio('assets/pokemon_vs_trainer.mp3')
+    function playPauseMusic () {
+        if (audio.paused) {
+            audio.play();
+        } else {
+            audio.pause();
+        }
+    }   
   });
+
+    //BakgrundsBild
+    function changeBackgroundImage() {
+        document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+    }
 
   function validateName() {
     try {
@@ -26,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (trainerName === "") {
             throw new Error("Name cannot be empty.");
         }
+
         if (trainerName.length < 5 || trainerName.length > 10) {
             throw new Error("Name must be between 5 and 10 characters long.");
         }
@@ -35,9 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
         document.querySelector("#errorMsg").textContent = error.message;
         return false;
-    }
-}
-
+      } 
+    } 
 
 function validateAge() {
     try {
@@ -58,3 +62,24 @@ function validateAge() {
         return false;
     }
 }
+
+//Creat player object
+const createPlayer = (nameInput, ageInput, genderInput) => {
+    const player = {
+        name: nameInput,
+        age: ageInput,
+        gender: genderInput,
+        score: []
+    }
+
+    return {
+        getPlayerInfo: (() => {
+            return player;
+        }),
+        setPlayerScore: ((time) => {
+            player.score.push(time);
+        })
+    }
+}
+
+
