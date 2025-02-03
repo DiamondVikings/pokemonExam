@@ -197,9 +197,44 @@ const manageHighScores = () => {
     }
 }
 
+const startingLoke = Array.from({ length: 10 }, (_, i) => ({
+    img: `image${i + 1}.png`,
+    originalImg: `image${i + 1}.png`,
+    id: i + 1,
+    isCaught: false
+}));
+
+    const pokemonOnGameField = document.querySelectorAll('.gamePokemonElement');
+    //denna arrayen behövs kanske inte då vi kommer att använda html's unika data attribut
+    const btns = [];
+    //startingLoke skall byta namn till startingPoke
+    startingLoke.forEach(pokemon => pokemon.isCaught = false);
+
+    pokemonOnGameField.forEach((pokemon, index) => {
+        const uniqueID = `pokemon-${index +1}`;
+        pokemon.id = uniqueID;
+        btns.push(pokemon);
+
+        const pokemonObject = startingLoke[index];
+
+        pokemon.addEventListener('mouseenter', (e) => {
+            if (pokemonObject.isCaught === true) {
+                pokemonObject.isCaught = false;
+                console.log(pokemonObject.isCaught);
+                imgToggle();
+            } else {
+                pokemonObject.isCaught = true;
+                imgToggle();
+                console.log(pokemonObject.isCaught);
+            }
+        });
+    });
+
+    // finlir på denna jäveln behövs, anpassa efter html elementen
+
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
-function imgToogle(pokemonObject) {
+function imgToggle(pokemonObject) {
     if (pokemonObject.isCaught) {
         pokemonObject.img = `url('.assets/ball.webp')`;
     } else {
