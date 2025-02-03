@@ -225,3 +225,25 @@ function checkGameOver(pokemonArray) {
 
 // --- HIGHSCORE LOGIC ---
 
+
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const timer = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+timer.startTimeInMilliseconds();
+timer.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", timer.startTimeInMilliseconds());
+console.log("Pts:", timer.nmbrOfMilliseconds());
+// ------------------  endTimer
