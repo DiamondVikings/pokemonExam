@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }   
   });
 
+  function changeBackgroundImage() {
+    document.body.style.backgroundImage = `url('../assets/arena-background.png')`;
+  }
+
   function validateName() {
     try {
         let nameInput = document.getElementById("nick");  
@@ -29,6 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (trainerName === "") {
             throw new Error("Name cannot be empty.");
         }
+
+    }  
+
+
+
+});
+
         if (trainerName.length < 5 || trainerName.length > 10) {
             throw new Error("Name must be between 5 and 10 characters long.");
         }
@@ -40,5 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 }
+
 
 
