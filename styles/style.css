@@ -1,3 +1,8 @@
+:root {
+    --white: #F8F8F8;
+    --black: #2E2E2E;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,6 +13,92 @@
 /* När ni sätter intervallen efter vilken pokemonen får sin nya position bör den intervallen överensstämma med tiden här. 3s. */
 img {
     width: 300px;
+    height: 300px;
     transition: all 3s linear;
+}
+
+body {
+    background-image: url("../assets/background.png");
+    background-size: cover;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.d-none {
+    display: none;
+}
+
+.form-wrapper {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;     
+    height: 50em; 
+    background-color: var(--white);    
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+form {
+    font-family: 'Afacad Flux';
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+}
+
+form > h1 {
+  font-size: 4rem;  
+  font-weight: 900;
+  text-align: center;
+}
+
+form > h3 {
+    font-size: 3em;
+}
+
+form > p {
+    font-size: 2rem;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+input {
+    font-size: 2rem;
+    width: 50%;
+}
+
+#boy, #girl, #no-answer {
+    height: 25px;
+    width: 25px;;
+    margin-left: 10px;
+}
+
+label {
+    font-size: 2rem;
+}
+
+#submitBtn {
+    font-size: 2rem;
+    font-family: 'Afacad Flux';
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    width: 60%;
+    height: 2em;
+    border: 1px solid black;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin-top: 50px;
 }
 
