@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error("Name must be between 5 and 10 characters long.");
         }
         oGameData.trainerName = trainerName;
-        document.querySelector("#errorMsg").textContent = "";
+        document.querySelector("#nameErrorMsg").textContent = "";
         return true;
     } catch (error) {
-        document.querySelector("#errorMsg").textContent = error.message;
+        document.querySelector("#nameErrorMsg").textContent = error.message;
         return false;
       } 
     } 
@@ -55,13 +55,29 @@ function validateAge() {
             throw new Error("Age must be between 10 and 15.");
         }
         oGameData.trainerAge = age;
-        document.getElementById("errorMsg").textContent = "";
+        document.querySelector("#ageErrorMsg").textContent = "";
         return true;
     } catch (error) {
-        document.getElementById("errorMsg").textContent = error.message;
+        document.querySelector("#ageErrorMsg").textContent = error.message;
         return false;
     }
 }
+
+function validateGender() {
+    try {
+        let gender = document.querySelector('input[name="gender"]:checked');
+        if (!gender) {
+            throw new Error("Please select a gender.");
+        }
+        oGameData.trainerGender = gender.value;
+        document.querySelector("#genderErrorMsg").textContent = ""; 
+        return true;
+    } catch (error) {
+        document.querySelector("#genderErrorMsg").textContent = error.message;
+        return false;
+    }
+}
+
 
 //Creat player object
 const createPlayer = (nameInput, ageInput, genderInput) => {
