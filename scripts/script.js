@@ -102,7 +102,7 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: []
+        score: '',
     }
 
     return {
@@ -110,7 +110,7 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
             return player;
         }),
         setPlayerScore: ((time) => {
-            player.score.push(time);
+            player.score = time;
         })
     }
 }
@@ -162,3 +162,24 @@ function imgSrc() {
 
     return imgArray
 }
+
+const manageHighScores = () => {
+    return {
+        addHighScore: (player) => {
+            const highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
+            highScoreArray.push(player)
+            localStorage.setItem('highScores', JSON.stringify(highScoreArray))
+        },
+        getHighScores: () => {
+            return JSON.parse(localStorage.getItem('highScores')) || [];
+        },    
+        clearHighScore: () => {
+            localStorage.removeItem('highScores');
+        },
+        /* sortHighScores: () => {
+
+        }  */
+    }
+}
+
+
