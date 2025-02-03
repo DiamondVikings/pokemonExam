@@ -1,32 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
-  
-    //Eventlistener submit form
+
+    // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(form);
-        //validateForm(formData.get('username'), formData.get('age'), formData.get('gender'))
+        // Validera formuläret
+        const isValid = validateForm();
+        if (isValid) {
+            // Om formuläret är giltigt, skapa player
+            const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
+            console.log(player.getPlayerInfo()); 
+
+            // startGame();
+        }
     });
 
     //Musikspelaren
     const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-    function playPauseMusic () {
+    function playPauseMusic() {
         if (audio.paused) {
             audio.play();
         } else {
             audio.pause();
         }
-    }   
-  });
-
-    //BakgrundsBild
-    function changeBackgroundImage() {
-        document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
     }
+});
 
-  function validateName() {
+//BakgrundsBild
+function changeBackgroundImage() {
+    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+}
+
+// Validera hela formuläret
+function validateForm() {
+    const isNameValid = validateName();
+    const isAgeValid = validateAge();
+    const isGenderValid = validateGender();
+
+    return isNameValid && isAgeValid && isGenderValid; // Returnerar true om alla valideringar är godkända
+}
+
+function validateName() {
     try {
-        let trainerName = document.querySelector("#nick").value.trim();  
+        let trainerName = document.querySelector("#nick").value.trim();
         if (trainerName === "") {
             throw new Error("Name cannot be empty.");
         }
@@ -40,12 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
         document.querySelector("#nameErrorMsg").textContent = error.message;
         return false;
-      } 
-    } 
+    }
+}
 
 function validateAge() {
     try {
-        let ageInput = document.querySelector("#age");  
+        let ageInput = document.querySelector("#age");
         let age = parseInt(ageInput.value.trim(), 10);
 
         if (isNaN(age)) {
@@ -70,7 +87,7 @@ function validateGender() {
             throw new Error("Please select a gender.");
         }
         oGameData.trainerGender = gender.value;
-        document.querySelector("#genderErrorMsg").textContent = ""; 
+        document.querySelector("#genderErrorMsg").textContent = "";
         return true;
     } catch (error) {
         document.querySelector("#genderErrorMsg").textContent = error.message;
