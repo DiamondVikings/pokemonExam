@@ -181,7 +181,7 @@ function imgSrc() {
  
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
-function isCaught(pokemonObject) {
+function imgToogle(pokemonObject) {
     if (pokemonObject.isCaught) {
         pokemonObject.img = `url('.assets/ball.webp')`;
     } else {
