@@ -14,24 +14,27 @@
       <form class="form" id="form">
         <h1>Welcome young pokemon trainer!</h1>
         <h3>Please enter your name</h2>
-        <input id="nick" type="text" placeholder="Trainer nickname" />
-        <input id="age" type="text" placeholder="Trainer age">
+        <input id="nick" type="text" placeholder="Trainer nickname" name="nickname" />
+        <p id="nameErrorMsg" class="error-message"></p>
+        <input id="age" type="text" placeholder="Trainer age" name="age"> 
+        <p id="ageErrorMsg" class="error-message"></p>
         <p>Are you a boy, a girl? Or prefer not to answer?</p>
         <section class="radio-wrapper">
           <label>
-            <input type="radio" name="gender" id="boy">
+            <input type="radio" name="gender" value="boy" id="boy">
             Boy
           </label>
           <label>
-            <input type="radio" name="gender" id="girl">
+            <input type="radio" name="gender" value="girl" id="girl">
             Girl
           </label>
           <label>
-            <input type="radio" name="gender" id="no-answer">
-            Prefer not to answer
+            <input type="radio" name="gender" value="no-gender" id="no-answer">
+            None
           </label>
         </section>
-        <button id="submitBtn">Let's catch some pokemons!</button>
+        <p id="genderErrorMsg" class="error-message"></p>
+        <button type="submit" id="submitBtn">Let's catch some pokemons!</button>
       </form>
     </section>
     <section id="gameField" class="game-field d-none">

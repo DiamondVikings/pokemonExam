@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
 
@@ -27,10 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//BakgrundsBild
-function changeBackgroundImage() {
-    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
-}
+
+
+
+
+// ------ FORM VALIDERING ----- 
 
 // Validera hela formuläret
 function validateForm() {
@@ -95,8 +97,13 @@ function validateGender() {
     }
 }
 
+// ------ END FORM VALIDATION ----- 
 
-//Creat player object
+
+
+// --- PLAYER LOGIC ---
+
+//Create player object
 const createPlayer = (nameInput, ageInput, genderInput) => {
     const player = {
         name: nameInput,
@@ -115,32 +122,109 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
     }
 }
 
-// ---Timer/poängräknare ----------- placeholder, otestad live
+// --- END PLAYER LOGIC ---
 
+
+// --- GAME LOGIC ----
+
+//BakgrundsBild
+function changeBackgroundImage() {
+    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+}
+
+//Genererar 10 pokemonObject med image srcs, id & boolean isChaught 
+function createStartingPokemon() {
+    let startingPoke = []
+    //Alla pokemon bilder
+    let imgArray = imgSrc();
+
+    // Shuffla elementen i imgArray
+    // Fisher-Yates Shuffle
+    for (let i = imgArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [imgArray[i], imgArray[j]] = [imgArray[j], imgArray[i]];
+    }
+    
+    // Ta de första 10 elementen
+    let controlArray = imgArray.slice(0, 10);
+
+    // Skapa 10 pokeObjekt o tilldela img & id
+    for (let i = 1; i <= 10; i++) {
+        let pokemonObject = {
+            img: controlArray[i - 1], // Tilldela bilderna direkt 
+            originalImg: controlArray[i - 1], // spara den ursprungliga bilden för att kunna återgå till den vid isCaught toogle
+            id: i,
+            isCaught: false
+        }
+        startingPoke.push(pokemonObject)
+    }
+    // Returnerar en array med 10 random pokemon
+    return startingPoke
+}
+
+
+//func() Skapa en array av alla pokemonbilderna
+function imgSrc() {
+    let imgArray = []
+
+    //skapa en array med alla pokemonbilderna
+    for (let i = 1; i <= 151; i++) {
+        let formattedNumber = i.toString().padStart(3, '0');
+        let img = `url('.assets/pokemons/${formattedNumber}.png')`;
+        
+        imgArray.push(img)
+    }
+
+    return imgArray
+}
+
+ 
+
+// Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
+function imgToogle(pokemonObject) {
+    if (pokemonObject.isCaught) {
+        pokemonObject.img = `url('.assets/ball.webp')`;
+    } else {
+        pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
+    }
+}
+
+
+//Kallas på vid hoverIn & hover Out function 
+function checkGameOver(pokemonArray) {
+    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+        console.log('spelet är slut');
+        playPauseMusic();
+        
+    } else {
+        console.log('alla är inte isCaught, fortsätt spela');
+    }
+}
+
+// --- END GAME LOGIC ---- 
+
+
+
+// --- HIGHSCORE LOGIC ---
+
+// ---Timer/poängräknare ----------- placeholder, otestad live
 const timer = {
     beginning: 0,
     ending: 0,
-
     startTimeInMilliseconds: function() {
         this.beginning = Date.now();
     },
-
     endTimeInMilliseconds: function() {
         this.ending = Date.now();
     },
-
     nmbrOfMilliseconds: function() {
         return this.ending - this.beginning;
     }
 };
 
 timer.startTimeInMilliseconds();
-
 timer.endTimeInMilliseconds();
-
 // Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
-
 // ------------------  endTimer
