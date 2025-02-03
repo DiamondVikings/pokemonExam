@@ -21,3 +21,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }   
 });
 
+
+//Creat player object
+const createPlayer = (nameInput, ageInput, genderInput) => {
+    const player = {
+        name: nameInput,
+        age: ageInput,
+        gender: genderInput,
+        score: []
+    }
+
+    return {
+        getPlayerInfo: (() => {
+            return player;
+        }),
+        setPlayerScore: ((time) => {
+            player.score.push(time);
+        })
+    }
+}
+
+
+
