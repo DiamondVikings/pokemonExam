@@ -134,11 +134,11 @@ const timer = {
     }
 };
 
-
 timer.startTimeInMilliseconds();
 
 timer.endTimeInMilliseconds();
 
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
 
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
