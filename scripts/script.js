@@ -197,40 +197,28 @@ const manageHighScores = () => {
     }
 }
 
-const startingLoke = Array.from({ length: 10 }, (_, i) => ({
-    img: `image${i + 1}.png`,
-    originalImg: `image${i + 1}.png`,
-    id: i + 1,
-    isCaught: false
-}));
-
-    const pokemonOnGameField = document.querySelectorAll('.gamePokemonElement');
-    //denna arrayen behövs kanske inte då vi kommer att använda html's unika data attribut
-    const btns = [];
-    //startingLoke skall byta namn till startingPoke
-    startingLoke.forEach(pokemon => pokemon.isCaught = false);
-
     pokemonOnGameField.forEach((pokemon, index) => {
-        const uniqueID = `pokemon-${index +1}`;
-        pokemon.id = uniqueID;
-        btns.push(pokemon);
+        const pokemonObject = startingPoke[index];
 
-        const pokemonObject = startingLoke[index];
+        //Får testa utan denna först
+        /*if (pokemonObject && pokemonObject.id) {
+            pokemon.id = `pokemon-${pokemonObject.id}`;
+        }*/
 
         pokemon.addEventListener('mouseenter', (e) => {
             if (pokemonObject.isCaught === true) {
                 pokemonObject.isCaught = false;
                 console.log(pokemonObject.isCaught);
-                imgToggle();
+                imgToggle(pokemonObject);
             } else {
                 pokemonObject.isCaught = true;
-                imgToggle();
+                imgToggle(pokemonObject);
                 console.log(pokemonObject.isCaught);
             }
         });
-    });
 
-    // finlir på denna jäveln behövs, anpassa efter html elementen
+        checkGameOver(startingPoke);
+    });
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
@@ -244,8 +232,8 @@ function imgToggle(pokemonObject) {
 
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(pokemonArray) {
-    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+function checkGameOver(startingPoke) {
+    if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
         
