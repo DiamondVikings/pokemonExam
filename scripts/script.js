@@ -2,7 +2,7 @@ const log = (msg) => console.log(msg);
 
 // I denna fil skriver ni all er kod
 
-//Genererar 10 pokemonObject med image scrs, id & boolean isChaught 
+//Genererar 10 pokemonObject med image srcs, id & boolean isChaught 
 function createStartingPokemon() {
     let startingPoke = []
     //Alla pokemon bilder
