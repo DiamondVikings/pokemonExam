@@ -22,6 +22,7 @@ function createStartingPokemon() {
     for (let i = 1; i <= 10; i++) {
         let pokemonObject = {
             img: controlArray[i - 1], // Tilldela bilderna direkt 
+            originalImg: controlArray[i - 1], // spara den ursprungliga bilden för att kunna återgå till den vid isCaught toogle
             id: i,
             isCaught: false
         }
@@ -39,12 +40,24 @@ function imgSrc() {
     //skapa en array med alla pokemonbilderna
     for (let i = 1; i <= 151; i++) {
         let formattedNumber = i.toString().padStart(3, '0');
-        let img = `url('.assets/pokemons/${formattedNumber}.png')`; //ENDA GREJEN ÄR BILDERNA KORREKT LÄNKADE??
+        let img = `url('.assets/pokemons/${formattedNumber}.png')`;
         
         imgArray.push(img)
     }
 
     return imgArray
+}
+
+
+//'KAN53-54-isCaught' 
+
+//func() om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
+function isCaught(pokemonObject) {
+    if (pokemonObject.isCaught) {
+        pokemonObject.img = `url('.assets/ball.webp')`;
+    } else {
+        pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
+    }
 }
 
 
