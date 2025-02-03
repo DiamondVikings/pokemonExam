@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             audio.pause();
         }
-    }   
+    }  
+
+    function changeBackgroundImage() {
+        document.body.style.backgroundImage = `url('../assets/arena-background.png')`;
+    }
+
 });
 
