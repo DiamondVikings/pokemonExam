@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
 
@@ -27,10 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-//BakgrundsBild
-function changeBackgroundImage() {
-    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
-}
+
+
+
+
+// ------ FORM VALIDERING ----- 
 
 // Validera hela formuläret
 function validateForm() {
@@ -95,8 +97,13 @@ function validateGender() {
     }
 }
 
+// ------ END FORM VALIDATION ----- 
 
-//Creat player object
+
+
+// --- PLAYER LOGIC ---
+
+//Create player object
 const createPlayer = (nameInput, ageInput, genderInput) => {
     const player = {
         name: nameInput,
@@ -115,8 +122,16 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
     }
 }
 
+// --- END PLAYER LOGIC ---
 
-//KAN38-ranomizePok
+
+// --- GAME LOGIC ----
+
+//BakgrundsBild
+function changeBackgroundImage() {
+    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+}
+
 //Genererar 10 pokemonObject med image srcs, id & boolean isChaught 
 function createStartingPokemon() {
     let startingPoke = []
@@ -182,4 +197,31 @@ const manageHighScores = () => {
     }
 }
 
+
+// Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
+function imgToogle(pokemonObject) {
+    if (pokemonObject.isCaught) {
+        pokemonObject.img = `url('.assets/ball.webp')`;
+    } else {
+        pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
+    }
+}
+
+
+//Kallas på vid hoverIn & hover Out function 
+function checkGameOver(pokemonArray) {
+    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+        console.log('spelet är slut');
+        playPauseMusic();
+        
+    } else {
+        console.log('alla är inte isCaught, fortsätt spela');
+    }
+}
+
+// --- END GAME LOGIC ---- 
+
+
+
+// --- HIGHSCORE LOGIC ---
 
