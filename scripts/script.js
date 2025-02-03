@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //validateForm(formData.get('username'), formData.get('age'), formData.get('gender'))
     });
     
-      //Musikspelaren
+    //Musikspelaren
     const audio = new Audio('assets/pokemon_vs_trainer.mp3')
     function playPauseMusic () {
         if (audio.paused) {
@@ -17,14 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.pause();
         }
     }   
+  });
 
-      //BakgrundsBild
+    //BakgrundsBild
     function changeBackgroundImage() {
-        document.body.style.backgroundImage = `url('../assets/arena-background.png')`;
+        document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
     }
 
     function validateName() {
-    try {
+      try {
         let nameInput = document.getElementById("nick");  
         let trainerName = nameInput.value.trim();
 
@@ -38,23 +39,28 @@ document.addEventListener('DOMContentLoaded', () => {
         oGameData.trainerName = trainerName;
         nameInput.placeholder = "Trainer nickname";
         return true;
-    } catch (error) {
+      } catch (error) {
         document.getElementById("nick").placeholder = error.message;
         return false;
+      } 
+    } 
+
+//Creat player object
+const createPlayer = (nameInput, ageInput, genderInput) => {
+    const player = {
+        name: nameInput,
+        age: ageInput,
+        gender: genderInput,
+        score: []
     }
-    }  
 
+    return {
+        getPlayerInfo: (() => {
+            return player;
+        }),
+        setPlayerScore: ((time) => {
+            player.score.push(time);
+        })
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-});
