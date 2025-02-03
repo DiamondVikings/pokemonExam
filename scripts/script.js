@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const formData = new FormData(form);
         //validateForm(formData.get('username'), formData.get('age'), formData.get('gender'))
-      })
+    });
     
-      // I denna fil skriver ni all er kod
       const audio = new Audio('assets/pokemon_vs_trainer.mp3')
       function playPauseMusic () {
           if (audio.paused) {
@@ -23,9 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function validateName() {
     try {
-        let nameInput = document.getElementById("nick");  
-        let trainerName = nameInput.value.trim();
-
+        let trainerName = document.querySelector("#nick").value.trim();  
         if (trainerName === "") {
             throw new Error("Name cannot be empty.");
         }
@@ -33,12 +30,31 @@ document.addEventListener('DOMContentLoaded', () => {
             throw new Error("Name must be between 5 and 10 characters long.");
         }
         oGameData.trainerName = trainerName;
-        nameInput.placeholder = "Trainer nickname";
+        document.querySelector("#errorMsg").textContent = "";
         return true;
     } catch (error) {
-        document.getElementById("nick").placeholder = error.message;
+        document.querySelector("#errorMsg").textContent = error.message;
         return false;
     }
 }
 
 
+function validateAge() {
+    try {
+        let ageInput = document.querySelector("#age");  
+        let age = parseInt(ageInput.value.trim(), 10);
+
+        if (isNaN(age)) {
+            throw new Error("Age must be a number.");
+        }
+        if (age < 10 || age > 15) {
+            throw new Error("Age must be between 10 and 15.");
+        }
+        oGameData.trainerAge = age;
+        document.getElementById("errorMsg").textContent = "";
+        return true;
+    } catch (error) {
+        document.getElementById("errorMsg").textContent = error.message;
+        return false;
+    }
+}
