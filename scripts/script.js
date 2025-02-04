@@ -180,6 +180,55 @@ function imgSrc() {
 
 
 
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const myScore = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+myScore.startTimeInMilliseconds();
+myScore.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", myScore.startTimeInMilliseconds());
+console.log("Pts:", myScore.nmbrOfMilliseconds());
+
+// ------------------  endTimer
+
+
+
+
+const manageHighScores = () => {
+    return {
+        addHighScore: (player) => {
+            const highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
+            highScoreArray.push(player)
+            localStorage.setItem('highScores', JSON.stringify(highScoreArray))
+        },
+        getHighScores: () => {
+            return JSON.parse(localStorage.getItem('highScores')) || [];
+        },    
+        clearHighScore: () => {
+            localStorage.removeItem('highScores');
+        },
+
+        sortHighScores: () => {
+            let highScoreArray = JSON.parse(localStorage('highScores')) || [];
+                highScoreArray.sort((a, b) => b.score - a.score);
+                highScoreArray = highScoreArray.slice(0, 10);
+                localStorage.setItem('highScores', JSON.stringify(highScoreArray));
+        }
+    }
+}
+
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToogle(pokemonObject) {
     if (pokemonObject.isCaught) {
@@ -203,29 +252,12 @@ function checkGameOver(pokemonArray) {
 
 // --- END GAME LOGIC ---- 
 
-
+function displayHighScores() {
+    const highScores = manageHighScores().getHighScores();
+    console.log("Top Scores:");
+    highScores.forEach((score, index) => {
+        console.log(`${index + 1}. ${score.name} - ${score.score} ms`);
+    });
+}
 
 // --- HIGHSCORE LOGIC ---
-
-
-// ---Timer/poängräknare ----------- placeholder, otestad live
-const timer = {
-    beginning: 0,
-    ending: 0,
-    startTimeInMilliseconds: function() {
-        this.beginning = Date.now();
-    },
-    endTimeInMilliseconds: function() {
-        this.ending = Date.now();
-    },
-    nmbrOfMilliseconds: function() {
-        return this.ending - this.beginning;
-    }
-};
-
-timer.startTimeInMilliseconds();
-timer.endTimeInMilliseconds();
-// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-// console.log("Tid:", timer.startTimeInMilliseconds());
-console.log("Pts:", timer.nmbrOfMilliseconds());
-// ------------------  endTimer
