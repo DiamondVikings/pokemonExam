@@ -107,7 +107,7 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: '',
+        score: 0,
     }
 
     return {
@@ -308,3 +308,9 @@ timer.endTimeInMilliseconds();
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
+
+
+const setPlayerInfo = (player) => {
+    document.querySelector('.playerName').appendChild(`${player.name}`);
+    document.querySelector('.playerScore').appendChild(`${player.score}`)
+}
