@@ -268,8 +268,6 @@ const manageHighScores = () => {
     });
  
 
-    }); 
-
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
