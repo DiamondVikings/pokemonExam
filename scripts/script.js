@@ -104,12 +104,18 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: '',
+        score: 0,
     }
 
     return {
         getPlayerInfo: (() => {
             return player;
+        }),
+        getPlayerName: (() => {
+            return player.name;
+        }),
+        getPlayerScore: (() => {
+            return player.score;
         }),
         setPlayerScore: ((time) => {
             player.score = time;
@@ -128,14 +134,11 @@ function startGame() {
     document.querySelector('#gameField').classList.remove('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    console.log(player.getPlayerInfo()); 
-
+    setPlayerInfo(player);
+  
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
-    console.log(startingPoke);
     createHTMLforPokeObj(startingPoke);
-
-    // timer();
 }
 
 
@@ -187,6 +190,7 @@ function imgSrc() {
     //skapa en array med alla pokemonbilderna
     for (let i = 1; i <= 151; i++) {
         let formattedNumber = i.toString().padStart(3, '0');
+
         let img = `../assets/pokemons/${formattedNumber}.png`;
         
         imgArray.push(img)
@@ -194,6 +198,7 @@ function imgSrc() {
 
     return imgArray
 }
+
 
 
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
@@ -229,7 +234,6 @@ function createHTMLforPokeObj(startingPoke) {
   
         });
     });
-}
 
 
 const manageHighScores = () => {
@@ -302,3 +306,11 @@ timer.endTimeInMilliseconds();
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
+
+
+function setPlayerInfo (player) {
+    let nameNode = document.createTextNode(player.getPlayerName());
+    let scoreNode = document.createTextNode(player.getPlayerScore());
+    document.querySelector('.playerName').appendChild(nameNode);
+    document.querySelector('.playerScore').appendChild(scoreNode);
+}
