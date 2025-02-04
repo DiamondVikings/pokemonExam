@@ -186,17 +186,20 @@ function createHTMLforPokeObj() {
             {
                 namn: "hej",
                 img: "imgUrl",
-                score: 10
+                score: 10,
+                id: 1
             },
             {
                 namn: "hej",
                 img: "imgUrl",
-                score: 10
+                score: 10,
+                id: 2
             },
             {
                 namn: "hej",
                 img: "imgUrl",
-                score: 10
+                score: 10,
+                id: 3
             }
             ];
 
