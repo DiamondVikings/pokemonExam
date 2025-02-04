@@ -126,7 +126,7 @@ function startGame() {
     console.log('Spelet startar..');
 
     document.querySelector('#formWrapper').style.display = 'none';
-    document.querySelector('#gameField').classList.remove('.d-none');
+    document.querySelector('#gameField').classList.remove ('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     console.log(player.getPlayerInfo()); 
@@ -212,9 +212,32 @@ const manageHighScores = () => {
     }
 }
 
+    pokemonOnGameField.forEach((pokemon, index) => {
+        const pokemonObject = startingPoke[index];
+
+        //Får testa utan denna först
+        /*if (pokemonObject && pokemonObject.id) {
+            pokemon.id = `pokemon-${pokemonObject.id}`;
+        }*/
+
+        pokemon.addEventListener('mouseenter', (e) => {
+            if (pokemonObject.isCaught === true) {
+                pokemonObject.isCaught = false;
+                console.log(pokemonObject.isCaught);
+                imgToggle(pokemonObject);
+            } else {
+                pokemonObject.isCaught = true;
+                imgToggle(pokemonObject);
+                console.log(pokemonObject.isCaught);
+            }
+        });
+
+        checkGameOver(startingPoke);
+    });
+
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
-function imgToogle(pokemonObject) {
+function imgToggle(pokemonObject) {
     if (pokemonObject.isCaught) {
         pokemonObject.img = `url('.assets/ball.webp')`;
     } else {
@@ -224,8 +247,8 @@ function imgToogle(pokemonObject) {
 
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(pokemonArray) {
-    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+function checkGameOver(startingPoke) {
+    if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
         
