@@ -1,9 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
-
     document.querySelector('#gameField').classList.add('d-none');
-
 
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
@@ -15,19 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Musikspelaren
-    const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-    function playPauseMusic() {
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    }
 });
 
-
-
+    //Musikspelaren
+const audio = new Audio('assets/pokemon_vs_trainer.mp3')
+function playPauseMusic() {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
 
 
 // ------ FORM VALIDERING ----- 
@@ -128,6 +124,29 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
 
 // --- END PLAYER LOGIC ---
 
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const timer = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+timer.startTimeInMilliseconds();
+timer.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", timer.startTimeInMilliseconds());
+console.log("Pts:", timer.nmbrOfMilliseconds());
+// ------------------  endTimer
+
+
 // --- START GAME ---
 
 function startGame() {
@@ -137,13 +156,18 @@ function startGame() {
     document.querySelector('#gameField').classList.remove('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    changeBackgroundImage();
     setPlayerInfo(player);
-    
-    let startingPokemon = createStartingPokemon();
-    // timer();
-    createHTMLforPokeObj(startingPokemon);
+
+    changeBackgroundImage();
+    let startingPoke = createStartingPokemon();
+    createHTMLforPokeObj(startingPoke);
     movePok()
+
+    // Spela musik
+    playPauseMusic();
+
+    // Starta timer
+    timer.startTimeInMilliseconds();
 }
 
 
@@ -187,7 +211,6 @@ function createStartingPokemon() {
     return startingPoke
 }
 
-
 //func() Skapa en array av alla pokemonbilderna
 function imgSrc() {
     let imgArray = []
@@ -195,7 +218,8 @@ function imgSrc() {
     //skapa en array med alla pokemonbilderna
     for (let i = 1; i <= 151; i++) {
         let formattedNumber = i.toString().padStart(3, '0');
-        let img = `assets/pokemons/${formattedNumber}.png`;
+
+        let img = `../assets/pokemons/${formattedNumber}.png`;
         
         imgArray.push(img)
     }
@@ -203,23 +227,6 @@ function imgSrc() {
     return imgArray
 }
 
-
-//Genererar ett htmlelement för varje pokeObject
-function createHTMLforPokeObj() {
-
-        let gameField = document.querySelector('#gameField')
-        let startingPokemons = createStartingPokemon();
-        
-        //Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
-        startingPokemons.forEach(function(poke) {
-            let gamePokEl = document.createElement('img')
-            gamePokEl.src = poke.img
-            gameField.appendChild(gamePokEl)
-            //Lägg till classnamn på bilderna
-            gamePokEl.classList.add('movingPoke');
-            
-        }) 
-}
 
 function movePok() {
     //välj ut alla img el med class movingPoke(returnerar en array)
@@ -238,6 +245,41 @@ function movePok() {
     setInterval(setPosition, 3000);
 }
 
+// Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
+ 
+//Genererar ett htmlelement för varje pokeObject
+function createHTMLforPokeObj(startingPoke) {
+    let gameField = document.querySelector('#gameField');
+    
+    // Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
+    startingPoke.forEach(function(poke, index) {
+        let gamePokEl = document.createElement('img');
+        gamePokEl.setAttribute('id', poke.id)
+        gamePokEl.src = poke.img;
+        gameField.appendChild(gamePokEl);
+
+        gamePokEl.addEventListener('mouseenter', (e) => {
+
+            const pokemonObject = startingPoke[index];
+
+            if (pokemonObject) {
+                if (pokemonObject.isCaught === true) {
+                    pokemonObject.isCaught = false;
+                    console.log(pokemonObject.isCaught);
+                    imgToggle(pokemonObject);
+                } else {
+                    pokemonObject.isCaught = true;
+                    imgToggle(pokemonObject);
+                    console.log(pokemonObject.isCaught);
+                }
+            checkGameOver(startingPoke);
+            imgToggle(pokemonObject);
+            }
+  
+        });
+    });
+}
+
 const manageHighScores = () => {
     return {
         addHighScore: (player) => {
@@ -251,59 +293,33 @@ const manageHighScores = () => {
         clearHighScore: () => {
             localStorage.removeItem('highScores');
         },
-        sortHighScores: () => {
-            let highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
-            highScoreArray.sort((a, b) => b.score - a.score);
-            highScoreArray = highScoreArray.slice(0, 10);
-            localStorage.setItem('highScores', JSON.stringify(highScoreArray));
-        } 
+        /* sortHighScores: () => {
+
+        }  */
     }
 }
-
-
- startingPokemons.forEach((pokemon, index) => {
-        const pokemonObject = startingPokemons[index];
-
-/*     pokemonOnGameField.forEach((pokemon, index) => {
-        const pokemonObject = startingPoke[index];
-*/
-
-        //Får testa utan denna först
-        if (pokemonObject && pokemonObject.id) {
-            pokemon.id = `pokemon-${pokemonObject.id}`;
-        }
-
-        pokemon.addEventListener('mouseenter', (e) => {
-            if (pokemonObject.isCaught === true) {
-                pokemonObject.isCaught = false;
-                console.log(pokemonObject.isCaught);
-                imgToggle(pokemonObject);
-            } else {
-                pokemonObject.isCaught = true;
-                imgToggle(pokemonObject);
-                console.log(pokemonObject.isCaught);
-            }
-        });
-
-        checkGameOver(startingPokemons);
-});
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
+    console.log(pokemonObject.id);
     if (pokemonObject.isCaught) {
-        pokemonObject.img = `assets/ball.webp`;
+        pokemonObject.img = `./assets/ball.webp`;
     } else {
         pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
     }
+    const imgElement = document.getElementById(pokemonObject.id);
+    console.log // Ensure each Pokémon has a unique ID
+    imgElement.src = pokemonObject.img;
 }
 
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(startingPokemons) {
-    if (startingPokemons.every(pokemonObject => pokemonObject.isCaught === true)) {
+function checkGameOver(startingPoke) {
+    if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
+        // timer.endTimeInMilliseconds();
         
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
@@ -317,27 +333,7 @@ function checkGameOver(startingPokemons) {
 // --- HIGHSCORE LOGIC ---
 
 
-// ---Timer/poängräknare ----------- placeholder, otestad live
-const timer = {
-    beginning: 0,
-    ending: 0,
-    startTimeInMilliseconds: function() {
-        this.beginning = Date.now();
-    },
-    endTimeInMilliseconds: function() {
-        this.ending = Date.now();
-    },
-    nmbrOfMilliseconds: function() {
-        return this.ending - this.beginning;
-    }
-};
 
-timer.startTimeInMilliseconds();
-timer.endTimeInMilliseconds();
-// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-// console.log("Tid:", timer.startTimeInMilliseconds());
-console.log("Pts:", timer.nmbrOfMilliseconds());
-// ------------------  endTimer
 
 
 function setPlayerInfo (player) {
