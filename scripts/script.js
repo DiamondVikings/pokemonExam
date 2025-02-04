@@ -5,15 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
         // Validera formuläret
         const isValid = validateForm();
         if (isValid) {
-            // Om formuläret är giltigt, skapa player
-            const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-            console.log(player.getPlayerInfo()); 
-
-            // startGame();
+            startGame();
         }
     });
 
@@ -109,7 +104,7 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: []
+        score: '',
     }
 
     return {
@@ -117,7 +112,7 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
             return player;
         }),
         setPlayerScore: ((time) => {
-            player.score.push(time);
+            player.score = time;
         })
     }
 }
@@ -142,6 +137,26 @@ function startGame() {
 
 
 // --- END START GAME ---
+
+// --- START GAME ---
+
+function startGame() {
+    console.log('Spelet startar..');
+
+    document.querySelector('#formWrapper').style.display = 'none';
+    document.querySelector('#gameField').classList.remove ('d-none');
+
+    const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
+    console.log(player.getPlayerInfo()); 
+
+    changeBackgroundImage();
+    createStartingPokemon();
+    // timer();
+}
+
+
+// --- END START GAME ---
+
 
 // --- GAME LOGIC ----
 
@@ -196,6 +211,7 @@ function imgSrc() {
     return imgArray
 }
 
+
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
 let startingPokemons = createStartingPokemon()
  
@@ -213,11 +229,51 @@ function createHTMLforPokeObj() {
 }
 
 
+const manageHighScores = () => {
+    return {
+        addHighScore: (player) => {
+            const highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
+            highScoreArray.push(player)
+            localStorage.setItem('highScores', JSON.stringify(highScoreArray))
+        },
+        getHighScores: () => {
+            return JSON.parse(localStorage.getItem('highScores')) || [];
+        },    
+        clearHighScore: () => {
+            localStorage.removeItem('highScores');
+        },
+        /* sortHighScores: () => {
 
+        }  */
+    }
+}
+
+    pokemonOnGameField.forEach((pokemon, index) => {
+        const pokemonObject = startingPoke[index];
+
+        //Får testa utan denna först
+        /*if (pokemonObject && pokemonObject.id) {
+            pokemon.id = `pokemon-${pokemonObject.id}`;
+        }*/
+
+        pokemon.addEventListener('mouseenter', (e) => {
+            if (pokemonObject.isCaught === true) {
+                pokemonObject.isCaught = false;
+                console.log(pokemonObject.isCaught);
+                imgToggle(pokemonObject);
+            } else {
+                pokemonObject.isCaught = true;
+                imgToggle(pokemonObject);
+                console.log(pokemonObject.isCaught);
+            }
+        });
+
+        checkGameOver(startingPoke);
+    });
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
-function isCaught(pokemonObject) {
+function imgToggle(pokemonObject) {
     if (pokemonObject.isCaught) {
         pokemonObject.img = `url('.assets/ball.webp')`;
     } else {
@@ -227,8 +283,8 @@ function isCaught(pokemonObject) {
 
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(pokemonArray) {
-    if (pokemonArray.every(pokemonObject => pokemonObject.isCaught === true)) {
+function checkGameOver(startingPoke) {
+    if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
         
@@ -242,3 +298,26 @@ function checkGameOver(pokemonArray) {
 
 
 // --- HIGHSCORE LOGIC ---
+
+
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const timer = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+timer.startTimeInMilliseconds();
+timer.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", timer.startTimeInMilliseconds());
+console.log("Pts:", timer.nmbrOfMilliseconds());
+// ------------------  endTimer
