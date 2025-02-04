@@ -138,8 +138,9 @@ function startGame() {
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     changeBackgroundImage();
-    createStartingPokemon();
+    let startingPokemon = createStartingPokemon();
     // timer();
+    createHTMLforPokeObj(startingPokemon);
 }
 
 
@@ -191,7 +192,7 @@ function imgSrc() {
     //skapa en array med alla pokemonbilderna
     for (let i = 1; i <= 151; i++) {
         let formattedNumber = i.toString().padStart(3, '0');
-        let img = `url('.assets/pokemons/${formattedNumber}.png')`;
+        let img = `assets/pokemons/${formattedNumber}.png`;
         
         imgArray.push(img)
     }
@@ -200,19 +201,18 @@ function imgSrc() {
 }
 
 
-// Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
-let pokemonOnGameField = createStartingPokemon()
- 
 //Genererar ett htmlelement för varje pokeObject
 function createHTMLforPokeObj() {
 
         let gameField = document.querySelector('#gameField')
+        let startingPokemons = createStartingPokemon();
         
         //Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
-        pokemonOnGameField.forEach(function(poke) {
+        startingPokemons.forEach(function(poke) {
             let gamePokEl = document.createElement('img')
             gamePokEl.src = poke.img
             gameField.appendChild(gamePokEl)
+            console.log(gamePokEl.src)
         }) 
 }
 
@@ -239,8 +239,13 @@ const manageHighScores = () => {
     }
 }
 
+
+ startingPokemons.forEach((pokemon, index) => {
+        const pokemonObject = startingPokemons[index];
+
 /*     pokemonOnGameField.forEach((pokemon, index) => {
         const pokemonObject = startingPoke[index];
+*/
 
         //Får testa utan denna först
         if (pokemonObject && pokemonObject.id) {
@@ -260,7 +265,11 @@ const manageHighScores = () => {
         });
 
         checkGameOver(startingPokemons);
-    }); */
+    });
+ 
+
+    }); 
+
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
