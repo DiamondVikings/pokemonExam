@@ -12,19 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Musikspelaren
-    const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-    function playPauseMusic() {
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    }
 });
 
-
-
+    //Musikspelaren
+const audio = new Audio('assets/pokemon_vs_trainer.mp3')
+function playPauseMusic() {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
 
 
 // ------ FORM VALIDERING ----- 
@@ -164,8 +162,7 @@ function startGame() {
     createHTMLforPokeObj(startingPoke);
 
     // Spela musik
-    const audio = document.querySelector('audio');
-    audio.play();
+    playPauseMusic();
 
     // Starta timer
     timer.startTimeInMilliseconds();
