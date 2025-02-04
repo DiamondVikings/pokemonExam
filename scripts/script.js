@@ -125,6 +125,29 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
 
 // --- END PLAYER LOGIC ---
 
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const timer = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+timer.startTimeInMilliseconds();
+timer.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", timer.startTimeInMilliseconds());
+console.log("Pts:", timer.nmbrOfMilliseconds());
+// ------------------  endTimer
+
+
 // --- START GAME ---
 
 function startGame() {
@@ -139,6 +162,13 @@ function startGame() {
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
     createHTMLforPokeObj(startingPoke);
+
+    // Spela musik
+    const audio = document.querySelector('audio');
+    audio.play();
+
+    // Starta timer
+    timer.startTimeInMilliseconds();
 }
 
 
@@ -234,7 +264,7 @@ function createHTMLforPokeObj(startingPoke) {
   
         });
     });
-
+}
 
 const manageHighScores = () => {
     return {
@@ -272,6 +302,7 @@ function checkGameOver(startingPoke) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
+        // timer.endTimeInMilliseconds();
         
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
@@ -285,27 +316,7 @@ function checkGameOver(startingPoke) {
 // --- HIGHSCORE LOGIC ---
 
 
-// ---Timer/poängräknare ----------- placeholder, otestad live
-const timer = {
-    beginning: 0,
-    ending: 0,
-    startTimeInMilliseconds: function() {
-        this.beginning = Date.now();
-    },
-    endTimeInMilliseconds: function() {
-        this.ending = Date.now();
-    },
-    nmbrOfMilliseconds: function() {
-        return this.ending - this.beginning;
-    }
-};
 
-timer.startTimeInMilliseconds();
-timer.endTimeInMilliseconds();
-// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-// console.log("Tid:", timer.startTimeInMilliseconds());
-console.log("Pts:", timer.nmbrOfMilliseconds());
-// ------------------  endTimer
 
 
 function setPlayerInfo (player) {
