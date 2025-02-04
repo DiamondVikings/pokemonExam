@@ -34,6 +34,7 @@ function startGame() {
 
     document.querySelector('#formWrapper').style.display = 'none';
     document.querySelector('#gameField').classList.remove('d-none');
+    document.querySelector('#highScore').style.display = 'none';
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     setPlayerInfo(player);
@@ -202,6 +203,7 @@ function checkGameOver(startingPoke) {
         console.log('spelet är slut');
         playPauseMusic();
         // timer.endTimeInMilliseconds();
+        document.querySelector('#highScore').style.display = 'block';;
         
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
