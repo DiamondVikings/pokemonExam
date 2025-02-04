@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Musikspelaren
 const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-audio.volume = 0.5;
+audio.volume = 0.2;
 function playPauseMusic() {
     if (audio.paused) {
         audio.play();
@@ -31,6 +31,9 @@ function playPauseMusic() {
 
 function startGame() {
     console.log('Spelet startar..');
+
+    const hidePoke = document.querySelector('.pokemonanim');
+    hidePoke.style.display = 'none';
 
     document.querySelector('#formWrapper').style.display = 'none';
     document.querySelector('#gameField').classList.remove('d-none');
