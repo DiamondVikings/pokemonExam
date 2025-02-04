@@ -114,6 +114,12 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         getPlayerInfo: (() => {
             return player;
         }),
+        getPlayerName: (() => {
+            return player.name;
+        }),
+        getPlayerScore: (() => {
+            return player.score;
+        }),
         setPlayerScore: ((time) => {
             player.score = time;
         })
@@ -131,8 +137,6 @@ function startGame() {
     document.querySelector('#gameField').classList.remove('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    console.log(player.getPlayerInfo()); 
-
     changeBackgroundImage();
     createStartingPokemon();
     // timer();
@@ -235,13 +239,13 @@ const manageHighScores = () => {
     }
 }
 
-    pokemonOnGameField.forEach((pokemon, index) => {
+/*     pokemonOnGameField.forEach((pokemon, index) => {
         const pokemonObject = startingPoke[index];
 
         //Får testa utan denna först
-        /*if (pokemonObject && pokemonObject.id) {
+        if (pokemonObject && pokemonObject.id) {
             pokemon.id = `pokemon-${pokemonObject.id}`;
-        }*/
+        }
 
         pokemon.addEventListener('mouseenter', (e) => {
             if (pokemonObject.isCaught === true) {
@@ -256,7 +260,7 @@ const manageHighScores = () => {
         });
 
         checkGameOver(startingPokemons);
-    });
+    }); */
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
@@ -311,6 +315,8 @@ console.log("Pts:", timer.nmbrOfMilliseconds());
 
 
 const setPlayerInfo = (player) => {
-    document.querySelector('.playerName').appendChild(`${player.name}`);
-    document.querySelector('.playerScore').appendChild(`${player.score}`)
+    let nameNode = document.createTextNode(player.getPlayerName());
+    let scoreNode = document.createTextNode(player.getPlayerScore());
+    document.querySelector('.playerName').appendChild(nameNode);
+    document.querySelector('.playerScore').appendChild(scoreNode);
 }
