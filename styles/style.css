@@ -107,3 +107,20 @@ label {
     margin-top: 50px;
 }
 
+.playerInfo {
+    font-family: 'Poppins';
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 3em;
+    color:white;
+    align-items: center;
+    font-weight: 700;
+}
+
+.playerName {
+    font-family: 'Poppins';
+    font-size: 2.2rem;
+    font-weight: 700;
+}
