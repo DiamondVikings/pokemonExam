@@ -143,6 +143,7 @@ function startGame() {
     let startingPokemon = createStartingPokemon();
     // timer();
     createHTMLforPokeObj(startingPokemon);
+    movePok()
 }
 
 
@@ -214,10 +215,28 @@ function createHTMLforPokeObj() {
             let gamePokEl = document.createElement('img')
             gamePokEl.src = poke.img
             gameField.appendChild(gamePokEl)
-            console.log(gamePokEl.src)
+            //Lägg till classnamn på bilderna
+            gamePokEl.classList.add('movingPoke');
+            
         }) 
 }
 
+function movePok() {
+    //välj ut alla img el med class movingPoke(returnerar en array)
+    let pokeImg = document.querySelectorAll('.movingPoke')
+
+    function setPosition() { 
+        pokeImg.forEach(function(element) {
+            let leftP = oGameData.getLeftPosition()
+            let topP = oGameData.getTopPosition()
+
+            element.style.left = leftP + 'px'
+            element.style.top = topP + 'px'
+            console.log(element.style.top)
+        });
+    }
+    setInterval(setPosition, 3000);
+}
 
 const manageHighScores = () => {
     return {
@@ -273,7 +292,7 @@ const manageHighScores = () => {
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
     if (pokemonObject.isCaught) {
-        pokemonObject.img = `url('.assets/ball.webp')`;
+        pokemonObject.img = `assets/ball.webp`;
     } else {
         pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
     }
