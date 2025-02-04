@@ -37,10 +37,11 @@ function startGame() {
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     setPlayerInfo(player);
-  
+
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
     createHTMLforPokeObj(startingPoke);
+    movePok()
 
     // Spela musik
     playPauseMusic();
@@ -103,6 +104,23 @@ function imgSrc() {
     }
 
     return imgArray
+}
+
+function movePok() {
+    //välj ut alla img el med class movingPoke(returnerar en array)
+    let pokeImg = document.querySelectorAll('.movingPoke')
+
+    function setPosition() { 
+        pokeImg.forEach(function(element) {
+            let leftP = oGameData.getLeftPosition()
+            let topP = oGameData.getTopPosition()
+
+            element.style.left = leftP + 'px'
+            element.style.top = topP + 'px'
+            console.log(element.style.top)
+        });
+    }
+    setInterval(setPosition, 3000);
 }
 
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
