@@ -238,11 +238,11 @@ function createHTMLforPokeObj(startingPoke) {
     // Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
     startingPoke.forEach(function(poke, index) {
         let gamePokEl = document.createElement('img');
+        gamePokEl.setAttribute('id', poke.id)
         gamePokEl.src = poke.img;
         gameField.appendChild(gamePokEl);
 
         gamePokEl.addEventListener('mouseenter', (e) => {
-            console.log('hello');
 
             const pokemonObject = startingPoke[index];
 
@@ -286,12 +286,15 @@ const manageHighScores = () => {
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
-    console.log(pokemonObject);
+    console.log(pokemonObject.id);
     if (pokemonObject.isCaught) {
         pokemonObject.img = `./assets/ball.webp`;
     } else {
         pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
     }
+    const imgElement = document.getElementById(pokemonObject.id);
+    console.log // Ensure each Pokémon has a unique ID
+    imgElement.src = pokemonObject.img;
 }
 
 
