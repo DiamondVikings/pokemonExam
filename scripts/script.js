@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
+    document.querySelector('#gameField').classList.add('d-none');
 
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
@@ -12,19 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Musikspelaren
-    const audio = new Audio('assets/pokemon_vs_trainer.mp3')
-    function playPauseMusic() {
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-    }
 });
 
-
-
+    //Musikspelaren
+const audio = new Audio('assets/pokemon_vs_trainer.mp3')
+function playPauseMusic() {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
 
 
 // ------ FORM VALIDERING ----- 
@@ -125,6 +124,29 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
 
 // --- END PLAYER LOGIC ---
 
+// ---Timer/poängräknare ----------- placeholder, otestad live
+const timer = {
+    beginning: 0,
+    ending: 0,
+    startTimeInMilliseconds: function() {
+        this.beginning = Date.now();
+    },
+    endTimeInMilliseconds: function() {
+        this.ending = Date.now();
+    },
+    nmbrOfMilliseconds: function() {
+        return this.ending - this.beginning;
+    }
+};
+
+timer.startTimeInMilliseconds();
+timer.endTimeInMilliseconds();
+// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
+// console.log("Tid:", timer.startTimeInMilliseconds());
+console.log("Pts:", timer.nmbrOfMilliseconds());
+// ------------------  endTimer
+
+
 // --- START GAME ---
 
 function startGame() {
@@ -139,6 +161,12 @@ function startGame() {
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
     createHTMLforPokeObj(startingPoke);
+
+    // Spela musik
+    playPauseMusic();
+
+    // Starta timer
+    timer.startTimeInMilliseconds();
 }
 
 
@@ -272,6 +300,7 @@ function checkGameOver(startingPoke) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
+        // timer.endTimeInMilliseconds();
         
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
@@ -285,27 +314,7 @@ function checkGameOver(startingPoke) {
 // --- HIGHSCORE LOGIC ---
 
 
-// ---Timer/poängräknare ----------- placeholder, otestad live
-const timer = {
-    beginning: 0,
-    ending: 0,
-    startTimeInMilliseconds: function() {
-        this.beginning = Date.now();
-    },
-    endTimeInMilliseconds: function() {
-        this.ending = Date.now();
-    },
-    nmbrOfMilliseconds: function() {
-        return this.ending - this.beginning;
-    }
-};
 
-timer.startTimeInMilliseconds();
-timer.endTimeInMilliseconds();
-// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-// console.log("Tid:", timer.startTimeInMilliseconds());
-console.log("Pts:", timer.nmbrOfMilliseconds());
-// ------------------  endTimer
 
 
 function setPlayerInfo (player) {
