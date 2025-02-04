@@ -138,6 +138,8 @@ function startGame() {
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     changeBackgroundImage();
+    setPlayerInfo(player);
+    
     let startingPokemon = createStartingPokemon();
     // timer();
     createHTMLforPokeObj(startingPokemon);
@@ -265,11 +267,7 @@ const manageHighScores = () => {
         });
 
         checkGameOver(startingPokemons);
-    });
- 
-
-    }); 
-
+});
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
@@ -323,7 +321,7 @@ console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
 
 
-const setPlayerInfo = (player) => {
+function setPlayerInfo (player) {
     let nameNode = document.createTextNode(player.getPlayerName());
     let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerName').appendChild(nameNode);
