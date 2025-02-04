@@ -41,7 +41,7 @@ function startGame() {
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
     createHTMLforPokeObj(startingPoke);
-    movePok()
+    movePok();
 
     // Spela musik
     playPauseMusic();
@@ -110,18 +110,19 @@ function movePok() {
     //välj ut alla img el med class movingPoke(returnerar en array)
     let pokeImg = document.querySelectorAll('.movingPoke')
 
-    function setPosition() { 
+    setInterval(() => {
         pokeImg.forEach(function(element) {
             let leftP = oGameData.getLeftPosition()
             let topP = oGameData.getTopPosition()
-
+    
             element.style.left = leftP + 'px'
             element.style.top = topP + 'px'
             console.log(element.style.top)
-        });
-    }
-    setInterval(setPosition, 3000);
+            console.log('Flyttar grejer')
+        })
+    }, 3000)
 }
+
 
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
  
@@ -133,6 +134,8 @@ function createHTMLforPokeObj(startingPoke) {
     startingPoke.forEach(function(poke, index) {
         let gamePokEl = document.createElement('img');
         gamePokEl.setAttribute('id', poke.id)
+        gamePokEl.setAttribute('class', 'movingPoke')
+
         gamePokEl.src = poke.img;
         gameField.appendChild(gamePokEl);
 
