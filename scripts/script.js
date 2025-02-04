@@ -1,6 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
+    document.querySelector('#gameField').classList.add('d-none');
 
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
