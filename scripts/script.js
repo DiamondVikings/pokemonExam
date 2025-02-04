@@ -2,6 +2,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const log = (msg) => console.log(msg);
 
+    document.querySelector('#gameField').classList.add('d-none');
+
+
     // Eventlistener submit form
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -125,26 +128,7 @@ function startGame() {
     console.log('Spelet startar..');
 
     document.querySelector('#formWrapper').style.display = 'none';
-    document.querySelector('#gameField').classList.remove('.d-none');
-
-    const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    console.log(player.getPlayerInfo()); 
-
-    changeBackgroundImage();
-    createStartingPokemon();
-    // timer();
-}
-
-
-// --- END START GAME ---
-
-// --- START GAME ---
-
-function startGame() {
-    console.log('Spelet startar..');
-
-    document.querySelector('#formWrapper').style.display = 'none';
-    document.querySelector('#gameField').classList.remove ('d-none');
+    document.querySelector('#gameField').classList.remove('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
     console.log(player.getPlayerInfo()); 
@@ -213,7 +197,7 @@ function imgSrc() {
 
 
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
-let startingPokemons = createStartingPokemon()
+let pokemonOnGameField = createStartingPokemon()
  
 //Genererar ett htmlelement för varje pokeObject
 function createHTMLforPokeObj() {
@@ -221,7 +205,7 @@ function createHTMLforPokeObj() {
         let gameField = document.querySelector('#gameField')
         
         //Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
-        startingPokemons.forEach(function(poke) {
+        pokemonOnGameField.forEach(function(poke) {
             let gamePokEl = document.createElement('img')
             gamePokEl.src = poke.img
             gameField.appendChild(gamePokEl)
@@ -242,9 +226,12 @@ const manageHighScores = () => {
         clearHighScore: () => {
             localStorage.removeItem('highScores');
         },
-        /* sortHighScores: () => {
-
-        }  */
+        sortHighScores: () => {
+            let highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
+            highScoreArray.sort((a, b) => b.score - a.score);
+            highScoreArray = highScoreArray.slice(0, 10);
+            localStorage.setItem('highScores', JSON.stringify(highScoreArray));
+        } 
     }
 }
 
@@ -268,7 +255,7 @@ const manageHighScores = () => {
             }
         });
 
-        checkGameOver(startingPoke);
+        checkGameOver(startingPokemons);
     });
 
 
@@ -283,8 +270,8 @@ function imgToggle(pokemonObject) {
 
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(startingPoke) {
-    if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
+function checkGameOver(startingPokemons) {
+    if (startingPokemons.every(pokemonObject => pokemonObject.isCaught === true)) {
         console.log('spelet är slut');
         playPauseMusic();
         
