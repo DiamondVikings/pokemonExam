@@ -107,12 +107,18 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: '',
+        score: 0,
     }
 
     return {
         getPlayerInfo: (() => {
             return player;
+        }),
+        getPlayerName: (() => {
+            return player.name;
+        }),
+        getPlayerScore: (() => {
+            return player.score;
         }),
         setPlayerScore: ((time) => {
             player.score = time;
@@ -131,8 +137,6 @@ function startGame() {
     document.querySelector('#gameField').classList.remove('d-none');
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    console.log(player.getPlayerInfo()); 
-
     changeBackgroundImage();
     let startingPokemon = createStartingPokemon();
     // timer();
@@ -235,13 +239,18 @@ const manageHighScores = () => {
     }
 }
 
+
  startingPokemons.forEach((pokemon, index) => {
         const pokemonObject = startingPokemons[index];
 
+/*     pokemonOnGameField.forEach((pokemon, index) => {
+        const pokemonObject = startingPoke[index];
+*/
+
         //Får testa utan denna först
-        /*if (pokemonObject && pokemonObject.id) {
+        if (pokemonObject && pokemonObject.id) {
             pokemon.id = `pokemon-${pokemonObject.id}`;
-        }*/
+        }
 
         pokemon.addEventListener('mouseenter', (e) => {
             if (pokemonObject.isCaught === true) {
@@ -258,6 +267,10 @@ const manageHighScores = () => {
         checkGameOver(startingPokemons);
     });
  
+
+    }); 
+
+
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
@@ -308,3 +321,11 @@ timer.endTimeInMilliseconds();
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
+
+
+const setPlayerInfo = (player) => {
+    let nameNode = document.createTextNode(player.getPlayerName());
+    let scoreNode = document.createTextNode(player.getPlayerScore());
+    document.querySelector('.playerName').appendChild(nameNode);
+    document.querySelector('.playerScore').appendChild(scoreNode);
+}
