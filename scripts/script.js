@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Musikspelaren
 const audio = new Audio('assets/pokemon_vs_trainer.mp3')
+audio.volume = 0.1;
 function playPauseMusic() {
     if (audio.paused) {
         audio.play();
@@ -130,6 +131,7 @@ const timer = {
     ending: 0,
     startTimeInMilliseconds: function() {
         this.beginning = Date.now();
+        timer = setInterval(updateTimer, 10)
     },
     endTimeInMilliseconds: function() {
         this.ending = Date.now();
@@ -137,7 +139,9 @@ const timer = {
     nmbrOfMilliseconds: function() {
         return this.ending - this.beginning;
     }
+    
 };
+
 
 timer.startTimeInMilliseconds();
 timer.endTimeInMilliseconds();
