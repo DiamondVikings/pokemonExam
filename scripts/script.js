@@ -178,24 +178,6 @@ function imgSrc() {
     return imgArray
 }
 
-const manageHighScores = () => {
-    return {
-        addHighScore: (player) => {
-            const highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
-            highScoreArray.push(player)
-            localStorage.setItem('highScores', JSON.stringify(highScoreArray))
-        },
-        getHighScores: () => {
-            return JSON.parse(localStorage.getItem('highScores')) || [];
-        },    
-        clearHighScore: () => {
-            localStorage.removeItem('highScores');
-        },
-        /* sortHighScores: () => {
-
-        }  */
-    }
-}
 
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
