@@ -119,6 +119,24 @@ const createPlayer = (nameInput, ageInput, genderInput) => {
 
 // --- END PLAYER LOGIC ---
 
+// --- START GAME ---
+
+function startGame() {
+    console.log('Spelet startar..');
+
+    document.querySelector('#formWrapper').style.display = 'none';
+    document.querySelector('#gameField').classList.remove('.d-none');
+
+    const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
+    console.log(player.getPlayerInfo()); 
+
+    changeBackgroundImage();
+    createStartingPokemon();
+    // timer();
+}
+
+
+// --- END START GAME ---
 
 // --- START GAME ---
 
@@ -192,6 +210,24 @@ function imgSrc() {
 
     return imgArray
 }
+
+
+// Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
+let startingPokemons = createStartingPokemon()
+ 
+//Genererar ett htmlelement för varje pokeObject
+function createHTMLforPokeObj() {
+
+        let gameField = document.querySelector('#gameField')
+        
+        //Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
+        startingPokemons.forEach(function(poke) {
+            let gamePokEl = document.createElement('img')
+            gamePokEl.src = poke.img
+            gameField.appendChild(gamePokEl)
+        }) 
+}
+
 
 const manageHighScores = () => {
     return {
