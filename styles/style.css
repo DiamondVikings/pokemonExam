@@ -16,6 +16,40 @@ img {
     height: 300px;
     transition: all 3s linear;
 }
+.pokemonanim {
+    position: fixed;
+    top: 0%;
+    z-index: -1;
+    left: 50%;
+    animation: movingAnim 5s infinite;
+}
+@keyframes movingAnim {
+    0% {
+        top: 0%;
+        left: 50%;
+        transform: rotate(0deg);
+    }
+    25% {
+        top: 75%;
+        left: 50%;
+        transform: rotate(180deg);
+    }
+    50% {
+        top: 50%;
+        left: 15%;
+        transform: rotate(-90deg);
+    }
+    75% {
+        top: 50%;
+        left: 70%;
+        transform: rotate(90deg);       
+    }
+    100% {
+        top: 0%;
+        left: 50%;
+        transform: rotate(0deg);
+    }
+}
 
 body {
     background-image: url("../assets/background.png");
@@ -35,48 +69,73 @@ body {
 }
 
 .form-wrapper {
-    width: 25%;
+    width: 55%;
     display: flex;
     align-items: center;
-    justify-content: center;     
-    height: 50em; 
+    justify-content: center;
+    overflow:auto;     
+    height: auto;
     background-color: var(--white);    
     border-radius: 25px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 form {
-    font-family: 'Afacad Flux';
+    font-family: 'Press Start 2P', cursive;
     color: var(--black);
     display: flex;
+    height: 100%;
     flex-direction: column;
     gap: 2em;
+    margin: 1em;
     align-items: center;
     justify-content: center;
 }
+.form-wrapper::before {
+    content: "Pokémon";
+    font-family: 'Press Start 2P', cursive;
+    font-size: large;
+    text-decoration: underline;
+    border-right: 2px solid black;
+    text-decoration-thickness: 1px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80vh;
+    background: linear-gradient(to top left, yellow, red);
+}
 
 form > h1 {
-  font-size: 4rem;  
+  font-size: 2rem;  
   font-weight: 900;
   text-align: center;
 }
 
 form > h3 {
-    font-size: 3em;
+    font-size: 1em;
 }
 
 form > p {
-    font-size: 2rem;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .error-message {
     color: red;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 input {
-    font-size: 2rem;
+    font-size: 0.8rem;
     width: 50%;
+    padding: 0.5rem; 
+}
+#nick, #age {
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 #boy, #girl, #no-answer {
@@ -86,7 +145,7 @@ input {
 }
 
 label {
-    font-size: 2rem;
+    font-size: 1rem;
 }
 
 #gameField {
@@ -95,20 +154,45 @@ label {
 }
 
 #submitBtn {
-    font-size: 2rem;
-    font-family: 'Afacad Flux';
-    background-color: white;
-    border: none;
+    font-size: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    background: white;
     border-radius: 15px;
     width: 60%;
-    height: 2em;
-    border: 1px solid black;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    height: auto;
+    padding: 1em;
+    border: none;
+    box-shadow: 4px 4px 10px rgb(219, 198, 6, 0.5);
     margin-top: 50px;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+}
+#submitBtn::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+}
+#submitBtn:hover {
+    cursor: pointer;
+    text-shadow: 2px 2px 2px #F8F8F8;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px rgb(219, 198, 6, 1);
+}
+#submitBtn:hover::after {
+    opacity: 1;
 }
 
 .playerInfo {
-    font-family: 'Poppins';
+    font-family: 'Press Start 2P', cursive;
     font-size: 2.2rem;
     display: flex;
     justify-content: space-evenly;
@@ -120,7 +204,61 @@ label {
 }
 
 .playerName {
-    font-family: 'Poppins';
+    font-family: 'Press Start 2P', cursive;
     font-size: 2.2rem;
     font-weight: 700;
+}
+
+.movingPoke {
+    position: absolute;
+}
+
+.high-score {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;     
+    height: 50em; 
+    background-color: var(--white);    
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.headingCongrat {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;  
+    font-weight: 900;
+    text-align: center;
+}
+
+#winMsg {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5em;
+}
+
+#highscoreList {
+    font-family: 'Press Start 2P', cursive;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.6rem;
+}
+
+#highscoreList li {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0.6rem;
+    border-bottom: 0.1rem solid #ddd;
+}
+
+#playAgainBtn {
+    font-size: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    background-color: rgb(199, 199, 199);
+    border: none;
+    border-radius: 15px;
+    width: 60%;
+    height: 2em;
+    border: 1px solid black;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin-top: 50px;
 }
