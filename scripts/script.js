@@ -129,8 +129,15 @@ function movePok() {
 }
 
 
+const clearGameField = () => {
+    document.querySelectorAll('.movingPoke').forEach((pokemon) => {
+        pokemon.classList.add('d-none');
+    })
+}
+
+
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
- 
+
 //Genererar ett htmlelement för varje pokeObject
 function createHTMLforPokeObj(startingPoke) {
     let gameField = document.querySelector('#gameField');
@@ -204,7 +211,7 @@ function imgToggle(pokemonObject) {
 //Kallas på vid hoverIn & hover Out function 
 function checkGameOver(startingPoke) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
-        console.log('spelet är slut');
+        clearGameField()
         playPauseMusic();
         // timer.endTimeInMilliseconds();
         document.querySelector('#highScore').style.display = 'block';;
