@@ -52,6 +52,7 @@ function startGame() {
 
     // Starta timer
     timer.startTimeInMilliseconds();
+
 }
 
 // --- END START GAME ---
@@ -91,7 +92,7 @@ function createStartingPokemon() {
         startingPoke.push(pokemonObject)
     }
     // Returnerar en array med 10 random pokemon
-    return startingPoke
+    return startingPoke;
 }
 
 //func() Skapa en array av alla pokemonbilderna
@@ -128,8 +129,15 @@ function movePok() {
 }
 
 
+const clearGameField = () => {
+    document.querySelectorAll('.movingPoke').forEach((pokemon) => {
+        pokemon.classList.add('d-none');
+    })
+}
+
+
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
- 
+
 //Genererar ett htmlelement för varje pokeObject
 function createHTMLforPokeObj(startingPoke) {
     let gameField = document.querySelector('#gameField');
@@ -180,7 +188,7 @@ const manageHighScores = () => {
         },
         sortHighScores: () => {
             let highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
-            highScoreArray.sort((a, b) => b.score - a.score);
+            highScoreArray.sort((a, b) => a.score - b.score);
             highScoreArray = highScoreArray.slice(0, 10);
             localStorage.setItem('highScores', JSON.stringify(highScoreArray));
         } 
@@ -203,7 +211,7 @@ function imgToggle(pokemonObject) {
 //Kallas på vid hoverIn & hover Out function 
 function checkGameOver(startingPoke) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
-        console.log('spelet är slut');
+        clearGameField()
         playPauseMusic();
         // timer.endTimeInMilliseconds();
         document.querySelector('#highScore').style.display = 'block';;
@@ -285,12 +293,12 @@ function validateGender() {
 // --- PLAYER LOGIC ---
 
 //Create player object
-const createPlayer = (nameInput, ageInput, genderInput) => {
+const createPlayer = (nameInput, ageInput, genderInput, scoreInput) => {
     const player = {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: 0,
+        score: scoreInput,
     }
 
     return {
@@ -345,5 +353,30 @@ console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
 
 
+
+
+
+    /* Fake highScore data */
+    const player1 = createPlayer('Calle', 15, 'Boy', 1342)
+    const player2 = createPlayer('Pelle', 17, 'Boy', 4512)
+    const player3 = createPlayer('Hilda', 11, 'Girl', 4644)
+    const player4 = createPlayer('Ragnar', 11, 'Boy', 4634)
+    const player5 = createPlayer('Love', 12, 'Boy', 9283)
+    const player6 = createPlayer('Ingalill', 13, 'Girl', 1453)
+    const player7 = createPlayer('Tova', 13, 'Girl', 1294)
+    const player8 = createPlayer('Emilia', 14, 'Girl', 3454)
+    const highScoreManager = manageHighScores();
+    highScoreManager.clearHighScore();
+    
+    highScoreManager.addHighScore(player1.getPlayerInfo())
+    highScoreManager.addHighScore(player2.getPlayerInfo())
+    highScoreManager.addHighScore(player3.getPlayerInfo())
+    highScoreManager.addHighScore(player4.getPlayerInfo())
+    highScoreManager.addHighScore(player5.getPlayerInfo())
+    highScoreManager.addHighScore(player6.getPlayerInfo())
+    highScoreManager.addHighScore(player7.getPlayerInfo())
+    highScoreManager.addHighScore(player8.getPlayerInfo())
+    highScoreManager.sortHighScores()
+    console.log(highScoreManager.getHighScores())
 
 
