@@ -262,3 +262,17 @@ label {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     margin-top: 50px;
 }
+
+#countdown {
+    font-size: 15rem;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
