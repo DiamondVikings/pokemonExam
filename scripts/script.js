@@ -20,16 +20,20 @@ const audio = new Audio('assets/pokemon_vs_trainer.mp3')
 audio.volume = 0.2;
 const muteBtn = document.getElementById('muteButton');
 
+const countAudio = new Audio('assets/countdownSFX.wav')
+countAudio.volume = 0.5;
+
 muteBtn.addEventListener('click', () => {
     audio.muted = !audio.muted;
     muteBtn.textContent = audio.muted ? "🔇" : "🔊";
 });
 
-function playPauseMusic() {
-    if (audio.paused) {
+function playPauseMusic(hasEnded) {
+    if (!hasEnded) {
         audio.play();
     } else {
         audio.pause();
+        audio.currentTime = 0;
     }
 }
 
@@ -38,6 +42,9 @@ function playPauseMusic() {
 function startCountdown() {
     const countdownElem = document.querySelector('#countdown');
     let count = 3;
+
+    countAudio.play();
+    document.body.style.pointerEvents = "none";
 
     const countdownId = setInterval(() => {
         if (count > 0) {
@@ -50,6 +57,7 @@ function startCountdown() {
 
             setTimeout(() => {
                 countdownElem.style.display = 'none';
+                document.body.style.pointerEvents = "auto";
             }, 1000);
         }
     }, 1000);
@@ -239,9 +247,10 @@ function checkGameOver(startingPoke, player) {
 }
 
 function endGame(player) {
+    const hasEnded = true;
     const highScoreManager = manageHighScores();
     document.querySelectorAll('.movingPoke').forEach(element => element.remove());
-    playPauseMusic();
+    playPauseMusic(hasEnded);
     timer.endTimeInMilliseconds();
     player.setPlayerScore(timer.nmbrOfMilliseconds())
     document.querySelector('#highScore').style.display = 'flex';
