@@ -80,8 +80,6 @@ function startGame() {
         timer.startTimeInMilliseconds();
         playPauseMusic();
     }, 3000);
-
-    timer.startTimeInMilliseconds();
 }
 
 // --- END START GAME ---
