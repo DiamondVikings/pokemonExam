@@ -42,6 +42,7 @@ function startCountdown() {
     const countdownId = setInterval(() => {
         if (count > 0) {
             countdownElem.textContent = count;
+            countdownElem.style.display = 'block';
             count--;
         } else {
             countdownElem.textContent = 'GO!'
