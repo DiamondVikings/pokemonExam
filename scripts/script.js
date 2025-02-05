@@ -214,28 +214,6 @@ const manageHighScores = () => {
     }
 }
 
-// const manageHighScores = () => {
-//     return {
-//         addHighScore: (player) => {
-//             const highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
-//             highScoreArray.push(player)
-//             localStorage.setItem('highScores', JSON.stringify(highScoreArray))
-//         },
-//         getHighScores: () => {
-//             return JSON.parse(localStorage.getItem('highScores')) || [];
-//         },
-//         clearHighScore: () => {
-//             localStorage.removeItem('highScores');
-//         },
-//         sortHighScores: () => {
-//             let highScoreArray = JSON.parse(localStorage.getItem('highScores')) || [];
-//             highScoreArray.sort((a, b) => a.score - b.score);
-//             highScoreArray = highScoreArray.slice(0, 10);
-//             localStorage.setItem('highScores', JSON.stringify(highScoreArray));
-//         }
-//     }
-// }
-
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
     if (pokemonObject.isCaught) {
@@ -441,6 +419,3 @@ function playAgain() {
     oGameData.init()
     document.querySelector('.playerName').textContent = 'Player name: ';
 }
-
-
-// ------------------  endGame
