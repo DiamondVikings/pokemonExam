@@ -246,10 +246,33 @@ function endGame(player) {
 
     highScoreManager.addHighScore(player.getPlayerInfo())
     highScoreManager.sortHighScores();
+    showHighscore();
     
 }
 
 // --- END GAME LOGIC ---- 
+
+// --- Highscore load ---
+function showHighscore() {
+    const highScoreManager = manageHighScores();
+
+    const highScores = highScoreManager.getHighScores();
+console.log(highScores)
+    const highScoreList = document.getElementById('highscoreList');
+    highScoreList.innerHTML = '';
+
+     if (highScores.length === 0) {
+         highScoreList.innerHTML = '<li>Det finns inga highscores än, spela en match och knip #1!</li>'
+         return;
+     }
+
+     highScores.forEach((score, index) => {
+         const listItem = document.createElement('li');
+         listItem.textContent = `#${index + 1} ${score.name}  - ${score.score};`
+         highScoreList.appendChild(listItem)
+     })
+}
+// --- END highscore load ---
 
 // ------ FORM VALIDERING ----- 
 
@@ -396,9 +419,3 @@ function playAgain() {
     oGameData.init()
     document.querySelector('.playerName').textContent = 'Player name: ';
 }
-
-
-// ------------------  endGame
-
-
-
