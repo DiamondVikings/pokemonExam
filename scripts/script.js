@@ -380,7 +380,7 @@ function setPlayerScoreHTML (player) {
 // --- END PLAYER LOGIC ---
 
 
-// ---Timer/poängräknare ----------- placeholder, otestad live
+// ---Timer -----------
 const timer = {
     beginning: 0,
     ending: 0,
@@ -395,7 +395,7 @@ const timer = {
     },
 }
 
-// ------------------  endTimer
+// END Timer
 
 
 // --- END GAME  ---
@@ -417,6 +417,3 @@ function playAgain() {
     oGameData.init()
     document.querySelector('.playerName').textContent = 'Player name: ';
 }
-
-
-// ------------------  endGame
