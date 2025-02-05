@@ -8,7 +8,7 @@ const oGameData = {
     trainerAge : 0,
     trainerGender : '',
     // Metod som nollställer datan i oGameData
-    init : () => {
+    init : function() {
         this.startTime = 0;
         this.endTime = 0;
         this.timerId = null;
@@ -28,19 +28,4 @@ const oGameData = {
         let nmbr = Math.round(Math.random() * ( window.innerHeight - 300)) + 1;
         return nmbr;
     },
-
-    // Metod som hämtar antalet millisekunder sedan 1 januari 1970 och placerar värdet i beginning attributet
-     /* startTimeInMilliseconds : function() {
-        this.startTime =  Date.now();
-    },
-
-    // Metod som hämtar antalet millisekunder sedan 1 januari 1970 och placerar värdet i ending attributet
-    endTimeInMilliseconds : function() {
-        this.endTime = Date.now();
-    },
-
-    // Metod som räknar ut och returnerar antalet millisekunder det tog att fånga alla 10 pokemons
-    nmbrOfMilliseconds: function() {
-        return this.endTime - this.startTime;
-    }
-}  */
+}
