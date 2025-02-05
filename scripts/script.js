@@ -159,13 +159,6 @@ function movePok() {
 }
 
 
-const clearGameField = () => {
-    document.querySelectorAll('.movingPoke').forEach((pokemon) => {
-        pokemon.classList.add('d-none');
-    })
-}
-
-
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
 
 //Genererar ett htmlelement för varje pokeObject
@@ -192,10 +185,7 @@ function createHTMLforPokeObj(startingPoke, player) {
                     pokemonObject.isCaught = true;
                     imgToggle(pokemonObject);
                 }
-                imgToggle(pokemonObject);
-
-            checkGameOver(startingPoke, player);
-            imgToggle(pokemonObject);     
+            checkGameOver(startingPoke, player);  
             }
         });
     });
@@ -246,7 +236,7 @@ function checkGameOver(startingPoke, player) {
 
 function endGame(player) {
     const highScoreManager = manageHighScores();
-    clearGameField()
+    document.querySelectorAll('.movingPoke').forEach(element => element.remove());
     playPauseMusic();
     timer.endTimeInMilliseconds();
     player.setPlayerScore(timer.nmbrOfMilliseconds())
