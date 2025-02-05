@@ -39,8 +39,8 @@ function startGame() {
     document.querySelector('#highScore').style.display = 'none';
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    setPlayerInfo(player);
-
+    setPlayerName(player)
+    setPlayerScore(player)
     changeBackgroundImage();
     let startingPoke = createStartingPokemon();
     createHTMLforPokeObj(startingPoke, player);
@@ -218,7 +218,7 @@ function endGame(player) {
     timer.endTimeInMilliseconds();
     player.setPlayerScore(timer.nmbrOfMilliseconds())
     document.querySelector('#highScore').style.display = 'flex';
-    setPlayerInfo(player)
+    setPlayerScore(player)
 
     highScoreManager.addHighScore(player.getPlayerInfo())
     highScoreManager.sortHighScores();
@@ -321,10 +321,13 @@ const createPlayer = (nameInput, ageInput, genderInput, /* scoreInput */) => {
     }
 }
 
-function setPlayerInfo (player) {
+function setPlayerName (player) {
     let nameNode = document.createTextNode(player.getPlayerName());
-    let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerName').appendChild(nameNode);
+}
+
+function setPlayerScore (player) {
+    let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerScore').appendChild(scoreNode);
 }
 
@@ -352,42 +355,4 @@ timer.endTimeInMilliseconds();
 // console.log("Tid:", timer.startTimeInMilliseconds());
 console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
-
-
-
-
-
-    /* Fake highScore data */
-/*     const player1 = createPlayer('Calle', 15, 'Boy', 1342)
-    const player2 = createPlayer('Pelle', 17, 'Boy', 4512)
-    const player3 = createPlayer('Hilda', 11, 'Girl', 4644)
-    const player4 = createPlayer('Ragnar', 11, 'Boy', 4634)
-    const player5 = createPlayer('Love', 12, 'Boy', 9283)
-    const player6 = createPlayer('Ingalill', 13, 'Girl', 1453)
-    const player7 = createPlayer('Tova', 13, 'Girl', 1294)
-    const player8 = createPlayer('Emilia', 14, 'Girl', 3454)
-
-    player1.setPlayerScore(1342)
-    player2.setPlayerScore(4512)
-    player3.setPlayerScore(4644)
-    player4.setPlayerScore(4634)
-    player5.setPlayerScore(9283)
-    player6.setPlayerScore(1453)
-    player7.setPlayerScore(1294)
-    player8.setPlayerScore(3454)
-
-    const highScoreManager = manageHighScores();
-    highScoreManager.clearHighScore();
-    
-    highScoreManager.addHighScore(player1.getPlayerInfo())
-    highScoreManager.addHighScore(player2.getPlayerInfo())
-    highScoreManager.addHighScore(player3.getPlayerInfo())
-    highScoreManager.addHighScore(player4.getPlayerInfo())
-    highScoreManager.addHighScore(player5.getPlayerInfo())
-    highScoreManager.addHighScore(player6.getPlayerInfo())
-    highScoreManager.addHighScore(player7.getPlayerInfo())
-    highScoreManager.addHighScore(player8.getPlayerInfo())
-    highScoreManager.sortHighScores()
-    console.log(highScoreManager.getHighScores()) */
-
 
