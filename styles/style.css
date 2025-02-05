@@ -17,7 +17,7 @@ img {
     transition: all 3s linear;
 }
 .pokemonanim {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0%;
     z-index: -1;
@@ -71,7 +71,7 @@ body {
 
 .form-wrapper {
     width: 55%;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     overflow:auto;     
@@ -150,7 +150,6 @@ label {
 }
 
 #gameField {
-    display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -224,8 +223,11 @@ label {
 }
 
 .high-score {
+    position: absolute;
+    top: 25%;
+    left: 25%;
     width: 55%;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center; 
     height: auto; 
