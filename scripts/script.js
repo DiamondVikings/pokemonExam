@@ -417,3 +417,6 @@ function playAgain() {
     oGameData.init()
     document.querySelector('.playerName').textContent = 'Player name: ';
 }
+
+
+// ------------------  endGame
