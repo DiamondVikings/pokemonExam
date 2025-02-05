@@ -15,9 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-    //Musikspelaren
+//Musikspelaren
 const audio = new Audio('assets/pokemon_vs_trainer.mp3')
 audio.volume = 0.2;
+const muteBtn = document.getElementById('muteButton');
+
+muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+});
+
 function playPauseMusic() {
     if (audio.paused) {
         audio.play();
@@ -26,12 +33,33 @@ function playPauseMusic() {
     }
 }
 
+// --- COUNTDOWN ---
+
+function startCountdown() {
+    const countdownElem = document.querySelector('#countdown');
+    let count = 3;
+
+    const countdownId = setInterval(() => {
+        if (count > 0) {
+            countdownElem.textContent = count;
+            count--;
+        } else {
+            countdownElem.textContent = 'GO!'
+            clearInterval(countdownId);
+
+            setTimeout(() => {
+                countdownElem.style.display = 'none';
+            }, 1000);
+        }
+    }, 1000);
+}
+
+// --- END COUNTDOWN ---
 
 // --- START GAME ---
 
 function startGame() {
-    console.log('Spelet startar..');
-
+    startCountdown();
     const hidePoke = document.querySelector('.pokemonanim');
     hidePoke.style.display = 'none';
 
@@ -40,22 +68,24 @@ function startGame() {
     document.querySelector('#highScore').style.display = 'none';
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    setPlayerInfo(player);
-
+    setPlayerName(player)
+    setPlayerScore(player)
     changeBackgroundImage();
-    let startingPoke = createStartingPokemon();
-    createHTMLforPokeObj(startingPoke);
-    movePok();
 
-    // Spela musik
-    playPauseMusic();
+    setTimeout(() => {
+        let startingPoke = createStartingPokemon();
+        createHTMLforPokeObj(startingPoke);
+        movePok();
+        timer.startTimeInMilliseconds();
+        playPauseMusic();
+    }, 3000);
 
-    // Starta timer
     timer.startTimeInMilliseconds();
-
 }
 
 // --- END START GAME ---
+
+
 
 
 // --- GAME LOGIC ----
@@ -81,7 +111,7 @@ function createStartingPokemon() {
         let j = Math.floor(Math.random() * (i + 1));
         [imgArray[i], imgArray[j]] = [imgArray[j], imgArray[i]];
     }
-    
+
     // Ta de första 10 elementen
     let controlArray = imgArray.slice(0, 10);
 
@@ -108,7 +138,7 @@ function imgSrc() {
         let formattedNumber = i.toString().padStart(3, '0');
 
         let img = `../assets/pokemons/${formattedNumber}.png`;
-        
+
         imgArray.push(img)
     }
 
@@ -120,26 +150,32 @@ function movePok() {
     let pokeImg = document.querySelectorAll('.movingPoke')
 
     setInterval(() => {
-        pokeImg.forEach(function(element) {
+        pokeImg.forEach(function (element) {
             let leftP = oGameData.getLeftPosition()
             let topP = oGameData.getTopPosition()
-    
+
             element.style.left = leftP + 'px'
             element.style.top = topP + 'px'
-            console.log(element.style.top)
         })
     }, 3000)
 }
 
 
+const clearGameField = () => {
+    document.querySelectorAll('.movingPoke').forEach((pokemon) => {
+        pokemon.classList.add('d-none');
+    })
+}
+
+
 // Skapa en variabel med alla startpokemons så den kan användas i functionen createHTMLforPokeObj
- 
+
 //Genererar ett htmlelement för varje pokeObject
-function createHTMLforPokeObj(startingPoke) {
+function createHTMLforPokeObj(startingPoke, player) {
     let gameField = document.querySelector('#gameField');
-    
+
     // Skapa ett htmlEl för varje objekt i pokemonObject(som ska va startingPoke eg.)
-    startingPoke.forEach(function(poke, index) {
+    startingPoke.forEach(function (poke, index) {
         let gamePokEl = document.createElement('img');
         gamePokEl.setAttribute('id', poke.id)
         gamePokEl.setAttribute('class', 'movingPoke')
@@ -154,17 +190,20 @@ function createHTMLforPokeObj(startingPoke) {
             if (pokemonObject) {
                 if (pokemonObject.isCaught === true) {
                     pokemonObject.isCaught = false;
-                    console.log(pokemonObject.isCaught);
                     imgToggle(pokemonObject);
                 } else {
                     pokemonObject.isCaught = true;
                     imgToggle(pokemonObject);
-                    console.log(pokemonObject.isCaught);
                 }
-            checkGameOver(startingPoke);
+
+                checkGameOver(startingPoke);
+                imgToggle(pokemonObject);
+
+            checkGameOver(startingPoke, player);
             imgToggle(pokemonObject);
+              
             }
-  
+
         });
     });
 }
@@ -178,7 +217,7 @@ const manageHighScores = () => {
         },
         getHighScores: () => {
             return JSON.parse(localStorage.getItem('highScores')) || [];
-        },    
+        },
         clearHighScore: () => {
             localStorage.removeItem('highScores');
         },
@@ -187,13 +226,12 @@ const manageHighScores = () => {
             highScoreArray.sort((a, b) => a.score - b.score);
             highScoreArray = highScoreArray.slice(0, 10);
             localStorage.setItem('highScores', JSON.stringify(highScoreArray));
-        } 
+        }
     }
 }
 
 // Om pokemon ej isCaught, byta till pokeboll. Om isCaught, byta till pokemonbild
 function imgToggle(pokemonObject) {
-    console.log(pokemonObject.id);
     if (pokemonObject.isCaught) {
         pokemonObject.img = `./assets/ball.webp`;
     } else {
@@ -205,16 +243,31 @@ function imgToggle(pokemonObject) {
 }
 
 //Kallas på vid hoverIn & hover Out function 
-function checkGameOver(startingPoke) {
+function checkGameOver(startingPoke, player) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
-        console.log('spelet är slut');
+        clearGameField()
         playPauseMusic();
         // timer.endTimeInMilliseconds();
         document.querySelector('#highScore').style.display = 'block';;
-        
+
+        endGame(player)
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
     }
+}
+
+function endGame(player) {
+    const highScoreManager = manageHighScores();
+    clearGameField()
+    playPauseMusic();
+    timer.endTimeInMilliseconds();
+    player.setPlayerScore(timer.nmbrOfMilliseconds())
+    document.querySelector('#highScore').style.display = 'flex';
+    setPlayerScore(player)
+
+    highScoreManager.addHighScore(player.getPlayerInfo())
+    highScoreManager.sortHighScores();
+    
 }
 
 // --- END GAME LOGIC ---- 
@@ -289,12 +342,12 @@ function validateGender() {
 // --- PLAYER LOGIC ---
 
 //Create player object
-const createPlayer = (nameInput, ageInput, genderInput, scoreInput) => {
+const createPlayer = (nameInput, ageInput, genderInput, /* scoreInput */) => {
     const player = {
         name: nameInput,
         age: ageInput,
         gender: genderInput,
-        score: scoreInput,
+        score: 0,
     }
 
     return {
@@ -313,10 +366,17 @@ const createPlayer = (nameInput, ageInput, genderInput, scoreInput) => {
     }
 }
 
-function setPlayerInfo (player) {
+
+function setPlayerInfo(player) {
+
+function setPlayerName (player) {
+
     let nameNode = document.createTextNode(player.getPlayerName());
-    let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerName').appendChild(nameNode);
+}
+
+function setPlayerScore (player) {
+    let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerScore').appendChild(scoreNode);
 }
 
@@ -327,22 +387,17 @@ function setPlayerInfo (player) {
 const timer = {
     beginning: 0,
     ending: 0,
-    startTimeInMilliseconds: function() {
+    startTimeInMilliseconds: function () {
         this.beginning = Date.now();
     },
-    endTimeInMilliseconds: function() {
+    endTimeInMilliseconds: function () {
         this.ending = Date.now();
     },
-    nmbrOfMilliseconds: function() {
+    nmbrOfMilliseconds: function () {
         return this.ending - this.beginning;
-    }
-};
+    },
+}
 
-timer.startTimeInMilliseconds();
-timer.endTimeInMilliseconds();
-// Här behöver vi referera tillbaka räknaren till ett visuellt element i html:en
-// console.log("Tid:", timer.startTimeInMilliseconds());
-console.log("Pts:", timer.nmbrOfMilliseconds());
 // ------------------  endTimer
 
 
@@ -366,31 +421,7 @@ function playAgain() {
 }
 
 
-
-
 // ------------------  endGame
 
-    /* Fake highScore data */
-    const player1 = createPlayer('Calle', 15, 'Boy', 1342)
-    const player2 = createPlayer('Yoda', 17, 'Boy', 4512)
-    const player3 = createPlayer('Britney', 11, 'Girl', 4644)
-    const player4 = createPlayer('Sonic', 11, 'Boy', 4634)
-    const player5 = createPlayer('Love', 12, 'Boy', 9283)
-    const player6 = createPlayer('Ingalill', 13, 'Girl', 1453)
-    const player7 = createPlayer('Rey', 13, 'Girl', 1294)
-    const player8 = createPlayer('Emilia', 14, 'Girl', 3454)
-    const highScoreManager = manageHighScores();
-    highScoreManager.clearHighScore();
-    
-    highScoreManager.addHighScore(player1.getPlayerInfo())
-    highScoreManager.addHighScore(player2.getPlayerInfo())
-    highScoreManager.addHighScore(player3.getPlayerInfo())
-    highScoreManager.addHighScore(player4.getPlayerInfo())
-    highScoreManager.addHighScore(player5.getPlayerInfo())
-    highScoreManager.addHighScore(player6.getPlayerInfo())
-    highScoreManager.addHighScore(player7.getPlayerInfo())
-    highScoreManager.addHighScore(player8.getPlayerInfo())
-    highScoreManager.sortHighScores()
-    console.log(highScoreManager.getHighScores())
 
 
