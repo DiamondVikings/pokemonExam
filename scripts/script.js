@@ -92,7 +92,11 @@ function startGame() {
 
 //BakgrundsBild
 function changeBackgroundImage() {
-    document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+    if (document.querySelector('#gameField').classList.contains('d-none')) {
+        document.body.style.backgroundImage = `url('./assets/background.png')`;
+    } else { 
+        document.body.style.backgroundImage = `url('./assets/arena-background.png')`;
+    }
 }
 
 //Genererar 10 pokemonObject med image srcs, id & boolean isChaught 
@@ -397,33 +401,27 @@ const timer = {
 // ------------------  endTimer
 
 
+// --- END GAME  ---
+
+//välj ut play again knapp
+let playAgBtn = document.querySelector('#playAgainBtn').addEventListener('click', playAgain)
+
+function playAgain() {
+    //tillbaka till formulärsidan
+    changeBackgroundImage();
+    document.querySelector('#formWrapper').style.display = 'flex';
+    document.querySelector('.pokemonanim').style.display = 'flex';
+    document.querySelector('#gameField').classList.add('d-none');
+    document.querySelector('#highScore').style.display = 'none';
+
+    changeBackgroundImage() 
+    
+    // age gender namn oGame reset
+    oGameData.init()
+}
 
 
-
-
-/* Fake highScore data */
-const player1 = createPlayer('Calle', 15, 'Boy', 1342)
-const player2 = createPlayer('Pelle', 17, 'Boy', 4512)
-const player3 = createPlayer('Hilda', 11, 'Girl', 4644)
-const player4 = createPlayer('Ragnar', 11, 'Boy', 4634)
-const player5 = createPlayer('Love', 12, 'Boy', 9283)
-const player6 = createPlayer('Ingalill', 13, 'Girl', 1453)
-const player7 = createPlayer('Tova', 13, 'Girl', 1294)
-const player8 = createPlayer('Emilia', 14, 'Girl', 3454)
-const highScoreManager = manageHighScores();
-highScoreManager.clearHighScore();
-
-highScoreManager.addHighScore(player1.getPlayerInfo())
-highScoreManager.addHighScore(player2.getPlayerInfo())
-highScoreManager.addHighScore(player3.getPlayerInfo())
-highScoreManager.addHighScore(player4.getPlayerInfo())
-highScoreManager.addHighScore(player5.getPlayerInfo())
-highScoreManager.addHighScore(player6.getPlayerInfo())
-highScoreManager.addHighScore(player7.getPlayerInfo())
-highScoreManager.addHighScore(player8.getPlayerInfo())
-highScoreManager.sortHighScores()
-console.log(highScoreManager.getHighScores())
-
+// ------------------  endGame
 
 
 
