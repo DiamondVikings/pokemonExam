@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //Musikspelaren
 const audio = new Audio('assets/pokemon_vs_trainer.mp3')
 audio.volume = 0.2;
+const muteBtn = document.getElementById('muteButton');
+
+muteBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔇" : "🔊";
+});
+
 function playPauseMusic() {
     if (audio.paused) {
         audio.play();
