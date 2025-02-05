@@ -388,6 +388,8 @@ function playAgain() {
     document.querySelector('.pokemonanim').style.display = 'flex';
     document.querySelector('#gameField').classList.add('d-none');
     document.querySelector('#highScore').style.display = 'none';
+    document.querySelector('.playerScore').textContent = 'Player score: '; 
+    changeBackgroundImage()
     
     // age gender namn oGame reset
     oGameData.init()
