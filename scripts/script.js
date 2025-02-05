@@ -213,6 +213,7 @@ function checkGameOver(startingPoke) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         clearGameField()
         playPauseMusic();
+        // sendHighscore(); trycker vi in här när den är klar
         // timer.endTimeInMilliseconds();
         document.querySelector('#highScore').style.display = 'block';;
         
@@ -326,6 +327,21 @@ function setPlayerInfo (player) {
 
 // --- END PLAYER LOGIC ---
 
+// --- Highscore load ---
+
+function sendHighscore() {
+    const list = document.getElementById('highscore');
+
+    // list.innerHTML = '';
+
+    highScoreArray.forEach( => {
+        const listPlayerAndScore = document.createElement('li');
+        listPlayerAndScore.textContent = playerName: playerScore;
+        list.appendChild(listItem);
+    });
+}
+
+// --- END highscore load ---
 
 // ---Timer/poängräknare ----------- placeholder, otestad live
 const timer = {
