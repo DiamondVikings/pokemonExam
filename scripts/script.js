@@ -77,9 +77,11 @@ function startGame() {
         let startingPoke = createStartingPokemon();
         createHTMLforPokeObj(startingPoke, player);
         movePok();
+        document.querySelectorAll('.movingPoke').forEach(pokemon => (pokemon.classList.remove('d-none')) )
         timer.startTimeInMilliseconds();
         playPauseMusic();
-    }, 3000);
+    }, 2000);
+
 
     timer.startTimeInMilliseconds();
 }
@@ -148,15 +150,18 @@ function movePok() {
     //välj ut alla img el med class movingPoke(returnerar en array)
     let pokeImg = document.querySelectorAll('.movingPoke')
 
-    setInterval(() => {
+    function moveImages() {
         pokeImg.forEach(function (element) {
             let leftP = oGameData.getLeftPosition()
             let topP = oGameData.getTopPosition()
 
             element.style.left = leftP + 'px'
             element.style.top = topP + 'px'
-        })
-    }, 3000)
+    });
+}
+
+    moveImages()
+    setInterval(moveImages, 3000)
 }
 
 
@@ -171,6 +176,7 @@ function createHTMLforPokeObj(startingPoke, player) {
         let gamePokEl = document.createElement('img');
         gamePokEl.setAttribute('id', poke.id)
         gamePokEl.setAttribute('class', 'movingPoke')
+        gamePokEl.classList.add('d-none')
 
         gamePokEl.src = poke.img;
         gameField.appendChild(gamePokEl);
