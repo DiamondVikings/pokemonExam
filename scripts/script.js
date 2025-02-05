@@ -68,13 +68,13 @@ function startGame() {
     document.querySelector('#highScore').style.display = 'none';
 
     const player = createPlayer(oGameData.trainerName, oGameData.trainerAge, oGameData.trainerGender);
-    setPlayerName(player)
-    setPlayerScore(player)
+    setPlayerNameHTML(player)
+    setPlayerScoreHTML(player)
     changeBackgroundImage();
 
     setTimeout(() => {
         let startingPoke = createStartingPokemon();
-        createHTMLforPokeObj(startingPoke);
+        createHTMLforPokeObj(startingPoke, player);
         movePok();
         timer.startTimeInMilliseconds();
         playPauseMusic();
@@ -84,8 +84,6 @@ function startGame() {
 }
 
 // --- END START GAME ---
-
-
 
 
 // --- GAME LOGIC ----
@@ -184,7 +182,6 @@ function createHTMLforPokeObj(startingPoke, player) {
         gameField.appendChild(gamePokEl);
 
         gamePokEl.addEventListener('mouseenter', (e) => {
-
             const pokemonObject = startingPoke[index];
 
             if (pokemonObject) {
@@ -195,15 +192,11 @@ function createHTMLforPokeObj(startingPoke, player) {
                     pokemonObject.isCaught = true;
                     imgToggle(pokemonObject);
                 }
-
-                checkGameOver(startingPoke);
                 imgToggle(pokemonObject);
 
             checkGameOver(startingPoke, player);
-            imgToggle(pokemonObject);
-              
+            imgToggle(pokemonObject);     
             }
-
         });
     });
 }
@@ -245,11 +238,6 @@ function imgToggle(pokemonObject) {
 //Kallas på vid hoverIn & hover Out function 
 function checkGameOver(startingPoke, player) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
-        clearGameField()
-        playPauseMusic();
-        // timer.endTimeInMilliseconds();
-        document.querySelector('#highScore').style.display = 'block';;
-
         endGame(player)
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
@@ -263,7 +251,7 @@ function endGame(player) {
     timer.endTimeInMilliseconds();
     player.setPlayerScore(timer.nmbrOfMilliseconds())
     document.querySelector('#highScore').style.display = 'flex';
-    setPlayerScore(player)
+    setPlayerScoreHTML(player)
 
     highScoreManager.addHighScore(player.getPlayerInfo())
     highScoreManager.sortHighScores();
@@ -342,7 +330,7 @@ function validateGender() {
 // --- PLAYER LOGIC ---
 
 //Create player object
-const createPlayer = (nameInput, ageInput, genderInput, /* scoreInput */) => {
+const createPlayer = (nameInput, ageInput, genderInput) => {
     const player = {
         name: nameInput,
         age: ageInput,
@@ -366,13 +354,13 @@ const createPlayer = (nameInput, ageInput, genderInput, /* scoreInput */) => {
     }
 }
 
-function setPlayerName (player) {
+function setPlayerNameHTML (player) {
 
     let nameNode = document.createTextNode(player.getPlayerName());
     document.querySelector('.playerName').appendChild(nameNode);
 }
 
-function setPlayerScore (player) {
+function setPlayerScoreHTML (player) {
     let scoreNode = document.createTextNode(player.getPlayerScore());
     document.querySelector('.playerScore').appendChild(scoreNode);
 }
@@ -410,7 +398,6 @@ function playAgain() {
     document.querySelector('.pokemonanim').style.display = 'flex';
     document.querySelector('#gameField').classList.add('d-none');
     document.querySelector('#highScore').style.display = 'none';
-    changeBackgroundImage() 
     
     // age gender namn oGame reset
     oGameData.init()
