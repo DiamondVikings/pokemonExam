@@ -322,6 +322,7 @@ label {
 
 
 #countdown {
+    z-index: 999;
     font-size: 15rem;
     font-family: 'Press Start 2P', cursive;
     font-weight: bold;
