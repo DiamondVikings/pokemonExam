@@ -366,9 +366,6 @@ const createPlayer = (nameInput, ageInput, genderInput, /* scoreInput */) => {
     }
 }
 
-
-function setPlayerInfo(player) {
-
 function setPlayerName (player) {
 
     let nameNode = document.createTextNode(player.getPlayerName());
@@ -413,11 +410,11 @@ function playAgain() {
     document.querySelector('.pokemonanim').style.display = 'flex';
     document.querySelector('#gameField').classList.add('d-none');
     document.querySelector('#highScore').style.display = 'none';
-
     changeBackgroundImage() 
     
     // age gender namn oGame reset
     oGameData.init()
+    document.querySelector('.playerName').textContent = 'Player name: ';
 }
 
 
