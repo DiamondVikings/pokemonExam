@@ -214,7 +214,7 @@ function checkGameOver(startingPoke) {
         clearGameField()
         playPauseMusic();
         // timer.endTimeInMilliseconds();
-        document.querySelector('#highScore').style.display = 'block';;
+        document.querySelector('#highScore').style.display = 'flex';
         
     } else {
         console.log('alla är inte isCaught, fortsätt spela');
