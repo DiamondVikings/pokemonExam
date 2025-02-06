@@ -37,34 +37,6 @@ function playPauseMusic(hasEnded) {
     }
 }
 
-// --- COUNTDOWN ---
-
-function startCountdown() {
-    const countdownElem = document.querySelector('#countdown');
-    let count = 3;
-
-    countAudio.play();
-    document.body.style.pointerEvents = "none";
-
-    const countdownId = setInterval(() => {
-        if (count > 0) {
-            countdownElem.textContent = count;
-            countdownElem.style.display = 'block';
-            count--;
-        } else {
-            countdownElem.textContent = 'GO!'
-            clearInterval(countdownId);
-
-            setTimeout(() => {
-                countdownElem.style.display = 'none';
-                document.body.style.pointerEvents = "auto";
-            }, 1000);
-        }
-    }, 1000);
-}
-
-// --- END COUNTDOWN ---
-
 // --- START GAME ---
 
 function startGame() {
@@ -92,6 +64,34 @@ function startGame() {
 }
 
 // --- END START GAME ---
+
+// --- COUNTDOWN ---
+
+function startCountdown() {
+    const countdownElem = document.querySelector('#countdown');
+    let count = 3;
+
+    countAudio.play();
+    document.body.style.pointerEvents = "none";
+
+    const countdownId = setInterval(() => {
+        if (count > 0) {
+            countdownElem.textContent = count;
+            countdownElem.style.display = 'block';
+            count--;
+        } else {
+            countdownElem.textContent = 'GO!'
+            clearInterval(countdownId);
+
+            setTimeout(() => {
+                countdownElem.style.display = 'none';
+                document.body.style.pointerEvents = "auto";
+            }, 1000);
+        }
+    }, 1000);
+}
+
+// --- END COUNTDOWN ---
 
 
 // --- GAME LOGIC ----
@@ -233,7 +233,6 @@ function imgToggle(pokemonObject) {
         pokemonObject.img = pokemonObject.originalImg; // Återgå till ursprungliga bilden
     }
     const imgElement = document.getElementById(pokemonObject.id);
-    console.log // Ensure each Pokémon has a unique ID
     imgElement.src = pokemonObject.img;
 }
 
@@ -241,9 +240,7 @@ function imgToggle(pokemonObject) {
 function checkGameOver(startingPoke, player) {
     if (startingPoke.every(pokemonObject => pokemonObject.isCaught === true)) {
         endGame(player)
-    } else {
-        console.log('alla är inte isCaught, fortsätt spela');
-    }
+    } 
 }
 
 function endGame(player) {
@@ -267,10 +264,9 @@ function endGame(player) {
 // --- Highscore load ---
 function showHighscore() {
     const highScoreManager = manageHighScores();
-
     const highScores = highScoreManager.getHighScores();
-console.log(highScores)
     const highScoreList = document.getElementById('highscoreList');
+    
     highScoreList.innerHTML = '';
 
      if (highScores.length === 0) {
