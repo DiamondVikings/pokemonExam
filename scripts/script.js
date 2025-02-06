@@ -52,7 +52,7 @@ function startGame() {
     setPlayerNameHTML(player)
     setPlayerScoreHTML(player)
     changeBackgroundImage();
-
+    
     setTimeout(() => {
         let startingPoke = createStartingPokemon();
         createHTMLforPokeObj(startingPoke, player);
@@ -412,6 +412,11 @@ const timer = {
 
 //välj ut play again knapp
 let playAgBtn = document.querySelector('#playAgainBtn').addEventListener('click', playAgain)
+document.getElementById('clearHighscore').addEventListener('click', () => {
+    const highScoreManager = manageHighScores()
+    highScoreManager.clearHighScore();
+    showHighscore();
+})
 
 function playAgain() {
     //tillbaka till formulärsidan
