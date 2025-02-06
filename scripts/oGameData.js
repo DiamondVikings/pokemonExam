@@ -1,18 +1,9 @@
 const oGameData = {
-    pokemonNumbers : [],
-    nmbrOfCaughtPokemons : 0,
-    startTime : 0,
-    endTime : 0,
-    timerId : null,
     trainerName : '',
     trainerAge : 0,
     trainerGender : '',
     // Metod som nollställer datan i oGameData
-    init : function() {
-        this.startTime = 0;
-        this.endTime = 0;
-        this.timerId = null;
-        
+    init : function() {    
         this.trainerName = '';
         this.trainerAge = 0;
         this.trainerGender = '';
