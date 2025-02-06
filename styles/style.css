@@ -1,3 +1,8 @@
+:root {
+    --white: #F8F8F8;
+    --black: #2E2E2E;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,6 +13,344 @@
 /* När ni sätter intervallen efter vilken pokemonen får sin nya position bör den intervallen överensstämma med tiden här. 3s. */
 img {
     width: 300px;
+    height: 300px;
     transition: all 3s linear;
+}
+.pokemonanim {
+    display: flex;
+    position: fixed;
+    top: 0%;
+    z-index: -1;
+    left: 50%;
+    animation: movingAnim 5s infinite;
+}
+@keyframes movingAnim {
+    0% {
+        top: 0%;
+        left: 50%;
+        transform: rotate(0deg);
+    }
+    25% {
+        top: 75%;
+        left: 50%;
+        transform: rotate(180deg);
+    }
+    50% {
+        top: 50%;
+        left: 15%;
+        transform: rotate(-90deg);
+    }
+    75% {
+        top: 50%;
+        left: 70%;
+        transform: rotate(90deg);       
+    }
+    100% {
+        top: 0%;
+        left: 50%;
+        transform: rotate(0deg);
+    }
+}
+
+body {
+    background-image: url("../assets/background.png");
+    background-size: cover;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.d-none {
+    display: none;
+}
+
+.form-wrapper {
+    width: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow:auto;     
+    height: auto;
+    background-color: var(--white);    
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+form {
+    font-family: 'Press Start 2P', cursive;
+    color: var(--black);
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 2em;
+    margin: 1em;
+    align-items: center;
+    justify-content: center;
+}
+.form-wrapper::before {
+    content: "Pokémon";
+    font-family: 'Press Start 2P', cursive;
+    font-size: large;
+    text-decoration: underline;
+    border-right: 2px solid black;
+    text-decoration-thickness: 1px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80vh;
+    background: linear-gradient(to top left, yellow, red);
+}
+
+form > h1 {
+  font-size: 2rem;  
+  font-weight: 900;
+  text-align: center;
+}
+
+form > h3 {
+    font-size: 1em;
+}
+
+form > p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+}
+
+input {
+    font-size: 0.8rem;
+    width: 50%;
+    padding: 0.5rem; 
+}
+#nick, #age {
+    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+#boy, #girl, #no-answer {
+    height: 25px;
+    width: 25px;;
+    margin-left: 10px;
+}
+
+label {
+    font-size: 1rem;
+}
+
+#gameField {
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+#submitBtn, #playAgainBtn, #clearHighscore{
+    font-size: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    background: white;
+    border-radius: 15px;
+    width: 60%;
+    height: auto;
+    padding: 1em;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 10px rgb(219, 198, 6, 0.5);
+    margin-top: 50px;
+    z-index: 1;
+    position: relative;
+    overflow: hidden;
+}
+#submitBtn::after, #playAgainBtn::after,  #clearHighscore::after{
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, purple);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+}
+#submitBtn:hover, #playAgainBtn:hover, #clearHighscore:hover{
+    cursor: pointer;
+    text-shadow: 2px 2px 2px #F8F8F8;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px rgb(219, 198, 6, 1);
+}
+#submitBtn:hover::after, #playAgainBtn:hover::after, #clearHighscore:hover::after {
+    opacity: 1;
+}
+
+.playerInfo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 3em;
+    color:white;
+    align-items: center;
+    font-weight: 700;
+    align-self: flex-start;
+}
+
+.playerName {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.movingPoke {
+    position: absolute;
+}
+
+.high-score {
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    display: none;
+    flex-direction: column;
+    align-items: center; 
+    height: auto; 
+    padding: 3rem 0rem 3rem;
+    background-color: var(--white);    
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.headingCongrat {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;  
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#winMsg {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5em;
+}
+
+#highscoreList {
+    font-family: 'Press Start 2P', cursive;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#highscoreList li {
+    font-family: 'Press Start 2P', cursive;
+    padding: 1rem;
+    margin: 0;
+    border-bottom: 0.1rem solid #ddd;
+    display: flex;
+    justify-content: space-evenly;
+}
+#highscoreList li:hover {
+    cursor: pointer;
+    font-size: 110%;
+    color: rgb(255, 0, 0);
+    text-shadow: 2px 2px 2px black;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px rgb(219, 198, 6, 1);
+}
+#highscoreList li::after {
+    content: "";
+    position: fixed;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 15px;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.3), rgba(255, 166, 0, 0.3), rgba(255, 255, 0, 0.3), rgba(0, 128, 0, 0.3), rgba(0, 0, 255, 0.3), rgba(128, 0, 128, 0.3));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease-in-out;
+}
+#highscoreList li:hover::after {
+    animation: pulsingBackground 0.5s infinite;
+}
+@keyframes pulsingBackground {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#playAgainBtn, #clearHighscore {
+    font-size: 1rem;
+    font-family: 'Press Start 2P', cursive;
+    background-color: rgb(199, 199, 199);
+    border: none;
+    border-radius: 15px;
+    width: 50%;
+    height: 2em;
+    border: 1px solid black;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin-top: 10px;
+}
+
+
+#countdown {
+    z-index: 999;
+    font-size: 15rem;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#muteButton {
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    font-size: 30px;
+    border-radius: 0%;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+#muteButton:hover {
+    border-radius: 50%;
+    cursor: pointer;
+    background: #c4c0c0;
+    border: 1px solid rgb(255, 238, 1);
 }
 
